@@ -44,5 +44,11 @@ The reverse proxy has the following features:
 * Service registry and discovery with Consul or Zookeeper
 * Manage configuration with light-config-server
 
-To learn how to use this proxy, pleases refer to [Getting Started]()
+To learn how to use this proxy, pleases refer to 
+
+* [Getting Started](https://networknt.github.io/light-proxy/getting-started/) to learn core concepts
+* [Tutorial](https://networknt.github.io/light-proxy/tutorial/) with step by step guide for RESTful proxy
+* [DevOps](https://networknt.github.io/light-proxy/devops/) for different configurations based on your situations
+
+
   
