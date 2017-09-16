@@ -1,9 +1,6 @@
 ---
 # Reverse Proxy Handler Configuration
 
-# If this handler is enabled or not
-enabled: false
-
 # If HTTP 2.0 protocol will be used to connect to target servers
 http2Enabled: false
 
