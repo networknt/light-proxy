@@ -19,6 +19,7 @@ public class ProxyHandlerProvider implements HandlerProvider {
     static ProxyConfig config =
          (ProxyConfig)Config.getInstance().getJsonObjectConfig(CONFIG_NAME, ProxyConfig.class);
 
+    @Override
     public HttpHandler getHandler() {
         List<String> hosts = Arrays.asList(config.getHosts().split(","));
         LoadBalancingProxyClient loadBalancer = new LoadBalancingProxyClient()

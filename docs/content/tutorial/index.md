@@ -9,12 +9,13 @@ configurations. We also explore standalone deployment and Docker deployment.
 
 With specification handler, security handler and validation handler change, you
 can easily update the configuration to make the same instance of light-proxy
-server work with GraphQL backend. 
+server work with GraphQL backend. The default configuration is for RESTful backend
+only as light-rest-4j middleware handlers are wired in the reqeust/response chain.
 
 To make it simple, we will build a backend service with light-rest-4j with a
 swagger specification file defined in [model-config](https://github.com/networknt/model-config) 
 repo. In real production environment, the backend service can be built with other 
-Java framework or another other language like Nodejs, Go etc.
+Java framework or other languages like Nodejs, Go etc.
 
 The backend service will have too endpoints: one get and one post to demo different
 scenarios in term of proxy functionality.
@@ -39,7 +40,7 @@ java -jar light-codegen/codegen-cli/target/codegen-cli.jar -f light-rest-4j -o l
 ```
 
 The newly updated handlers can be found [here](https://github.com/networknt/light-example-4j/tree/master/rest/light-proxy-backend/src/main/java/com/networknt/backend/handler)
-and these files are the only ones changed after light-codegen.
+and these files along with test cases are the only ones changed after light-codegen.
 
 ## Start backend services
 
@@ -55,8 +56,8 @@ light-example-4j/rest folder already. If not, let's clone the repo and compile i
 cd ~/networknt
 git clone git@github.com:networknt/light-example-4j.git
 ```
-In order to start three instance with different http port, we need to update server.yml which
-is located at light-proxy-backend/src/resources/config folder before each start. The following 
+In order to start three instances with different http ports, we need to update server.yml which
+is located at light-proxy-backend/src/main/resources/config folder before each start. The following 
 is the default one generated based on the config.json file. As you can see, http is disabled 
 and https is enabled and listen to 8443 port. Let's enable http and disable https and change 
 http port from 8080 to 8081.  
@@ -158,7 +159,19 @@ curl http://localhost:8081/v1/getData
 Result:
 
 ```json
-[ {  "value" : "aeiou",  "key" : "aeiou"} ]
+{"enableHttp2":true,"httpPort":8081,"enableHttps":false,"value":"value1","httpsPort":8443,"key":"key1"}
+```
+
+You can also test the post request with the following command line.
+
+```
+curl -X POST   http://localhost:8081/v1/postData   -H 'content-type: application/json'   -d '{"key":"key1", "value": "value1"}'
+```
+
+And the request should be something like this.
+
+```json
+{"enableHttps":false,"value":"value1","httpsPort":8443,"key":"key1","enableHttp2":true,"httpPort":8081}
 ```
 
 Now let's start another service in another terminal after updating the port number to
@@ -265,7 +278,7 @@ to 8081, 8082 and 8083 on http protocol.
 ## light-proxy configuration
 
 With the backend services ready, let's clone the light-proxy and make some configuration
-change. 
+changes. 
 
 ```
 cd ~/networknt
@@ -293,3 +306,166 @@ connectionsPerThread: 20
 maxRequestTime: 10000
 
 ``` 
+
+As we are going to enable Security and Validator based on swagger.json from backend server,
+let's copy the swagger.json from light-example-4j/rest/light-proxy-backend/src/main/resources/config folder.
+
+```
+cd ~/networknt
+cp light-example-4j/rest/light-proxy-backend/src/main/resources/config/swagger.json light-proxy/src/main/resources/config
+```
+
+## start light-proxy and test
+
+```
+cd ~/networknt/light-proxy
+mvn clean install -DskipTests
+mvn exec:exec
+```
+
+Given the light-proxy server.yml only have https enabled and listening to port 8080, let's
+use curl to test it.
+
+```
+curl -k https://localhost:8080/v1/getData
+```
+
+And we get result:
+
+```
+curl -k https://localhost:8080/v1/getData
+{"enableHttp2":true,"httpPort":8082,"enableHttps":false,"value":"value1","httpsPort":8443,"key":"key1"}
+curl -k https://localhost:8080/v1/getData
+{"enableHttp2":true,"httpPort":8083,"enableHttps":false,"value":"value1","httpsPort":8443,"key":"key1"}
+curl -k https://localhost:8080/v1/getData
+{"enableHttp2":true,"httpPort":8081,"enableHttps":false,"value":"value1","httpsPort":8443,"key":"key1"}
+curl -k https://localhost:8080/v1/getData
+{"enableHttp2":true,"httpPort":8082,"enableHttps":false,"value":"value1","httpsPort":8443,"key":"key1"}
+```
+
+As you can see the proxy server is working on http connection to the backend services. And 
+the response is from different instances for each request due to load balance. You can stop 
+one of the three instances and the proxy will automatically failover to working instances.
+
+Also, you can test the post request with the following command line.
+
+```
+curl -k -X POST \
+  https://localhost:8080/v1/postData \
+  -H 'content-type: application/json' \
+  -d '{"key":"key1", "value": "value1"}'
+```
+
+And we hit the error in Undertow.
+
+```
+14:04:03.357 [XNIO-1 I/O-1]   ERROR io.undertow.proxy handleFailure - UT005028: Proxy request to /v1/postData failed
+io.undertow.server.TruncatedResponseException: null
+	at io.undertow.client.http.HttpRequestConduit.truncateWrites(HttpRequestConduit.java:711)
+	at io.undertow.conduits.AbstractFixedLengthStreamSinkConduit.terminateWrites(AbstractFixedLengthStreamSinkConduit.java:256)
+	at org.xnio.conduits.ConduitStreamSinkChannel.shutdownWrites(ConduitStreamSinkChannel.java:178)
+	at io.undertow.channels.DetachableStreamSinkChannel.shutdownWrites(DetachableStreamSinkChannel.java:79)
+	at io.undertow.server.handlers.proxy.ProxyHandler$HTTPTrailerChannelListener.handleEvent(ProxyHandler.java:736)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyAction$1.completed(ProxyHandler.java:628)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyAction$1.completed(ProxyHandler.java:543)
+	at io.undertow.client.http.HttpClientExchange.invokeReadReadyCallback(HttpClientExchange.java:212)
+	at io.undertow.client.http.HttpClientConnection.initiateRequest(HttpClientConnection.java:418)
+	at io.undertow.client.http.HttpClientConnection.sendRequest(HttpClientConnection.java:350)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyAction.run(ProxyHandler.java:543)
+	at io.undertow.util.SameThreadExecutor.execute(SameThreadExecutor.java:35)
+	at io.undertow.server.HttpServerExchange.dispatch(HttpServerExchange.java:797)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyClientHandler.completed(ProxyHandler.java:298)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyClientHandler.completed(ProxyHandler.java:272)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool.connectionReady(ProxyConnectionPool.java:338)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool.access$900(ProxyConnectionPool.java:61)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool$2.completed(ProxyConnectionPool.java:286)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool$2.completed(ProxyConnectionPool.java:273)
+	at io.undertow.client.http.HttpClientProvider.handleConnected(HttpClientProvider.java:156)
+	at io.undertow.client.http.HttpClientProvider.access$000(HttpClientProvider.java:51)
+	at io.undertow.client.http.HttpClientProvider$2.handleEvent(HttpClientProvider.java:127)
+	at io.undertow.client.http.HttpClientProvider$2.handleEvent(HttpClientProvider.java:124)
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92)
+	at org.xnio.nio.WorkerThread$ConnectHandle.handleReady(WorkerThread.java:326)
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561)
+14:05:03.462 [XNIO-1 I/O-1]   ERROR io.undertow.proxy handleFailure - UT005028: Proxy request to /v1/postData failed
+java.io.IOException: UT001000: Connection closed
+	at io.undertow.client.http.HttpClientConnection$ClientReadListener.handleEvent(HttpClientConnection.java:573)
+	at io.undertow.client.http.HttpClientConnection$ClientReadListener.handleEvent(HttpClientConnection.java:511)
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92)
+	at org.xnio.conduits.ReadReadyHandler$ChannelListenerHandler.readReady(ReadReadyHandler.java:66)
+	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88)
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561)
+14:05:37.434 [XNIO-1 I/O-5]   ERROR io.undertow.proxy handleFailure - UT005028: Proxy request to /v1/postData failed
+io.undertow.server.TruncatedResponseException: null
+	at io.undertow.client.http.HttpRequestConduit.truncateWrites(HttpRequestConduit.java:711)
+	at io.undertow.conduits.AbstractFixedLengthStreamSinkConduit.terminateWrites(AbstractFixedLengthStreamSinkConduit.java:256)
+	at org.xnio.conduits.ConduitStreamSinkChannel.shutdownWrites(ConduitStreamSinkChannel.java:178)
+	at io.undertow.channels.DetachableStreamSinkChannel.shutdownWrites(DetachableStreamSinkChannel.java:79)
+	at io.undertow.server.handlers.proxy.ProxyHandler$HTTPTrailerChannelListener.handleEvent(ProxyHandler.java:736)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyAction$1.completed(ProxyHandler.java:628)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyAction$1.completed(ProxyHandler.java:543)
+	at io.undertow.client.http.HttpClientExchange.invokeReadReadyCallback(HttpClientExchange.java:212)
+	at io.undertow.client.http.HttpClientConnection.initiateRequest(HttpClientConnection.java:418)
+	at io.undertow.client.http.HttpClientConnection.sendRequest(HttpClientConnection.java:350)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyAction.run(ProxyHandler.java:543)
+	at io.undertow.util.SameThreadExecutor.execute(SameThreadExecutor.java:35)
+	at io.undertow.server.HttpServerExchange.dispatch(HttpServerExchange.java:797)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyClientHandler.completed(ProxyHandler.java:298)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyClientHandler.completed(ProxyHandler.java:272)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool.connectionReady(ProxyConnectionPool.java:338)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool.access$900(ProxyConnectionPool.java:61)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool$2.completed(ProxyConnectionPool.java:286)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool$2.completed(ProxyConnectionPool.java:273)
+	at io.undertow.client.http.HttpClientProvider.handleConnected(HttpClientProvider.java:156)
+	at io.undertow.client.http.HttpClientProvider.access$000(HttpClientProvider.java:51)
+	at io.undertow.client.http.HttpClientProvider$2.handleEvent(HttpClientProvider.java:127)
+	at io.undertow.client.http.HttpClientProvider$2.handleEvent(HttpClientProvider.java:124)
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92)
+	at org.xnio.nio.WorkerThread$ConnectHandle.handleReady(WorkerThread.java:326)
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561)
+14:05:50.670 [XNIO-1 I/O-1]   ERROR io.undertow.proxy handleFailure - UT005028: Proxy request to /v1/postData failed
+io.undertow.server.TruncatedResponseException: null
+	at io.undertow.client.http.HttpRequestConduit.truncateWrites(HttpRequestConduit.java:711)
+	at io.undertow.conduits.AbstractFixedLengthStreamSinkConduit.terminateWrites(AbstractFixedLengthStreamSinkConduit.java:256)
+	at org.xnio.conduits.ConduitStreamSinkChannel.shutdownWrites(ConduitStreamSinkChannel.java:178)
+	at io.undertow.channels.DetachableStreamSinkChannel.shutdownWrites(DetachableStreamSinkChannel.java:79)
+	at io.undertow.server.handlers.proxy.ProxyHandler$HTTPTrailerChannelListener.handleEvent(ProxyHandler.java:736)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyAction$1.completed(ProxyHandler.java:628)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyAction$1.completed(ProxyHandler.java:543)
+	at io.undertow.client.http.HttpClientExchange.invokeReadReadyCallback(HttpClientExchange.java:212)
+	at io.undertow.client.http.HttpClientConnection.initiateRequest(HttpClientConnection.java:418)
+	at io.undertow.client.http.HttpClientConnection.sendRequest(HttpClientConnection.java:350)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyAction.run(ProxyHandler.java:543)
+	at io.undertow.util.SameThreadExecutor.execute(SameThreadExecutor.java:35)
+	at io.undertow.server.HttpServerExchange.dispatch(HttpServerExchange.java:797)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyClientHandler.completed(ProxyHandler.java:298)
+	at io.undertow.server.handlers.proxy.ProxyHandler$ProxyClientHandler.completed(ProxyHandler.java:272)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool.connectionReady(ProxyConnectionPool.java:338)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool.access$900(ProxyConnectionPool.java:61)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool$2.completed(ProxyConnectionPool.java:286)
+	at io.undertow.server.handlers.proxy.ProxyConnectionPool$2.completed(ProxyConnectionPool.java:273)
+	at io.undertow.client.http.HttpClientProvider.handleConnected(HttpClientProvider.java:156)
+	at io.undertow.client.http.HttpClientProvider.access$000(HttpClientProvider.java:51)
+	at io.undertow.client.http.HttpClientProvider$2.handleEvent(HttpClientProvider.java:127)
+	at io.undertow.client.http.HttpClientProvider$2.handleEvent(HttpClientProvider.java:124)
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92)
+	at org.xnio.nio.WorkerThread$ConnectHandle.handleReady(WorkerThread.java:326)
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561)
+14:06:37.544 [XNIO-1 I/O-5]   ERROR io.undertow.proxy handleFailure - UT005028: Proxy request to /v1/postData failed
+java.io.IOException: UT001000: Connection closed
+	at io.undertow.client.http.HttpClientConnection$ClientReadListener.handleEvent(HttpClientConnection.java:573)
+	at io.undertow.client.http.HttpClientConnection$ClientReadListener.handleEvent(HttpClientConnection.java:511)
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92)
+	at org.xnio.conduits.ReadReadyHandler$ChannelListenerHandler.readReady(ReadReadyHandler.java:66)
+	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88)
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561)
+14:06:50.779 [XNIO-1 I/O-1]   ERROR io.undertow.proxy handleFailure - UT005028: Proxy request to /v1/postData failed
+java.io.IOException: UT001000: Connection closed
+	at io.undertow.client.http.HttpClientConnection$ClientReadListener.handleEvent(HttpClientConnection.java:573)
+	at io.undertow.client.http.HttpClientConnection$ClientReadListener.handleEvent(HttpClientConnection.java:511)
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92)
+	at org.xnio.conduits.ReadReadyHandler$ChannelListenerHandler.readReady(ReadReadyHandler.java:66)
+	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88)
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561)
+
+```
