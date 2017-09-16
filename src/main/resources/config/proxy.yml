@@ -1,0 +1,17 @@
+---
+# Reverse Proxy Handler Configuration
+
+# If HTTP 2.0 protocol will be used to connect to target servers
+http2Enabled: false
+
+# If TLS is enabled when connecting to the target servers
+httpsEnabled: false
+
+# Target URIs
+hosts: http://localhost:8081,http://localhost:8082,http://localhost:8083
+
+# Connections per thread to the target servers
+connectionsPerThread: 20
+
+# Max request time in milliseconds before timeout
+maxRequestTime: 10000
