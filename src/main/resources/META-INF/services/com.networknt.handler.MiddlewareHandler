@@ -8,8 +8,8 @@ com.networknt.validator.ValidatorHandler
 com.networknt.sanitizer.SanitizerHandler
 #SimpleAudit Log important info about the request into audit log
 com.networknt.audit.AuditHandler
-#Body Parse body based on content type in the header.
-com.networknt.body.BodyHandler
+#Body Parse body based on content type in the header. It must be disabled otherwise the body will be consumed by proxy.
+#com.networknt.body.BodyHandler
 #Security JWT token verification and scope verification (depending on SwaggerHandler)
 com.networknt.security.JwtVerifyHandler
 #Swagger Parsing swagger specification based on request uri and method.
