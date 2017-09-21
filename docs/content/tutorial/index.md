@@ -10,7 +10,7 @@ configurations. We also explore standalone deployment and Docker deployment.
 With specification handler, security handler and validation handler change, you
 can easily update the configuration to make the same instance of light-proxy
 server work with GraphQL backend. The default configuration is for RESTful backend
-only as light-rest-4j middleware handlers are wired in the reqeust/response chain.
+only as light-rest-4j middleware handlers are wired in the request/response chain.
 
 To make it simple, we will build a backend service with light-rest-4j with a
 swagger specification file defined in [model-config](https://github.com/networknt/model-config) 
