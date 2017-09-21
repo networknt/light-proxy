@@ -1,6 +1,5 @@
 ---
 date: 2017-09-21T14:19:08-04:00
-draft: true
 title: Light Proxy Backend Service
 ---
 
