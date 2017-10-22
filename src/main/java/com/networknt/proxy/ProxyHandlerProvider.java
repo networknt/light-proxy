@@ -1,26 +1,18 @@
 package com.networknt.proxy;
 
 import com.networknt.client.Http2Client;
-import com.networknt.common.SecretConfig;
 import com.networknt.config.Config;
 import com.networknt.server.HandlerProvider;
-import io.undertow.client.UndertowClient;
-import io.undertow.protocols.ssl.UndertowXnioSsl;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.ResponseCodeHandler;
 import io.undertow.server.handlers.proxy.LoadBalancingProxyClient;
 import io.undertow.server.handlers.proxy.ProxyHandler;
-import org.xnio.OptionMap;
-import org.xnio.Xnio;
-import org.xnio.ssl.XnioSsl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
-
-import static com.networknt.client.Http2Client.CONFIG_SECRET;
 
 
 public class ProxyHandlerProvider implements HandlerProvider {
