@@ -2,6 +2,8 @@
 # for cross cutting concerns. In most cases, you should replace some of the default handlers with your own implementation
 # Please note: the sequence of these handlers are very important.
 
+#Header handler to manipulate request and/or response headers before or after downstream server
+com.networknt.header.HeaderHandler
 #Validator Validate request based on swagger specification (depending on Swagger and Body)
 com.networknt.validator.ValidatorHandler
 #Sanitizer Encode cross site scripting
