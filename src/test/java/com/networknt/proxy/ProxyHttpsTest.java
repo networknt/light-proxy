@@ -1,6 +1,7 @@
 package com.networknt.proxy;
 
 import com.networknt.client.Http2Client;
+import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
 import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
@@ -16,15 +17,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xnio.IoUtils;
 import org.xnio.OptionMap;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class ProxyTest {
-    static final Logger logger = LoggerFactory.getLogger(ProxyTest.class);
+/**
+ * Since release 1.5.0, light-proxy will support both http and https to the
+ * downstream servers. This test case will cover the scenario that https is
+ * used. As we only have one default proxy.yml in test folder, we will manually
+ * construct a config file to test https connections.
+ *
+ * @author Steve Hu
+ */
+public class ProxyHttpsTest {
+    static final Logger logger = LoggerFactory.getLogger(ProxyHttpTest.class);
 
     static Undertow server1 = null;
     static Undertow server2 = null;
@@ -37,9 +56,31 @@ public class ProxyTest {
     static final int httpPort = server.getServerConfig().getHttpPort();
     static final int httpsPort = server.getServerConfig().getHttpsPort();
     static final String url = enableHttp2 || enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
+    static final String homeDir = System.getProperty("user.home");
 
     @BeforeClass
     public static void setUp() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("http2Enabled", true);
+        map.put("httpsEnabled", true);
+        map.put("hosts", "https://localhost:8081,https://localhost:8082,https://localhost:8083");
+        map.put("connectionsPerThread", 20);
+        map.put("maxRequestTime", 10000);
+        try {
+            DumperOptions options = new DumperOptions();
+            options.setAllowReadOnlyProperties(true);
+            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+            options.setIndent(4);
+
+            Yaml yaml = new Yaml(options);
+            FileWriter writer = new FileWriter(homeDir + "/proxy.yml");
+            yaml.dump(map, writer);
+            // Add home directory to the classpath of the system class loader.
+            addURL(new File(homeDir).toURI().toURL());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if(server1 == null) {
             logger.info("starting server1");
             server1 = Undertow.builder()
@@ -118,6 +159,10 @@ public class ProxyTest {
             server3.stop();
             logger.info("The server3 is stopped.");
         }
+
+        // Remove the test.json from home directory
+        File test = new File(homeDir + "/proxy.yml");
+        test.delete();
     }
 
 
@@ -158,4 +203,16 @@ public class ProxyTest {
             System.out.println(reference.get().getAttachment(Http2Client.RESPONSE_BODY));
         }
     }
+
+    public static void addURL(URL url) throws Exception {
+        URLClassLoader classLoader
+                = (URLClassLoader) ClassLoader.getSystemClassLoader();
+        Class clazz= URLClassLoader.class;
+
+        // Use reflection
+        Method method= clazz.getDeclaredMethod("addURL", URL.class);
+        method.setAccessible(true);
+        method.invoke(classLoader, url);
+    }
+
 }
