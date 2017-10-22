@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+## 1.5.0 - 2017-10-21
+### Added
+
+### Changed
+- fixes #3 Wire in header middleware handler to manipulate request/response headers
+- fixes #2 Upgrade dependencies and add maven-version
+- Upgrade to light-4j 1.5.0
+- Upgrade to light-rest-4j 1.5.0
+
 ## 1.4.6 - 2017-09-24
 ### Added
 
