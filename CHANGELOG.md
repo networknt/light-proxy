@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
+- fixes #4 Allow light-proxy to connect to downstream server with https
 - Upgrade to light-4j 1.5.1
 - Upgrade to light-rest-4j 1.5.1
 
