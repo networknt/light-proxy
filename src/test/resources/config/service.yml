@@ -31,6 +31,7 @@ singletons:
   # Sanitizer Encode cross site scripting
   - com.networknt.sanitizer.SanitizerHandler
   # Validator Validate request based on swagger specification (depending on Swagger and Body)
-  - com.networknt.validator.ValidatorHandler
+  # As BodyHandler is disabled above, this must be disabled until the issue with keep stream is fixed.
+  # - com.networknt.validator.ValidatorHandler
   # Header handler to manipulate request and/or response headers before or after downstream server
   - com.networknt.header.HeaderHandler
