@@ -1,7 +1,7 @@
 A fast and light-weight reverse proxy with embedded gateway to wrap third party APIs and bring them to the ecosystem of light-*-4j frameworks
 
 [Developer Chat](https://gitter.im/networknt/light-proxy) |
-[Documentation](https://networknt.github.io/light-proxy) |
+[Documentation](https://doc.networknt.com/service/proxy/) |
 [Contribution Guide](CONTRIBUTING.md) |
 
 [![Build Status](https://travis-ci.org/networknt/light-proxy.svg?branch=master)](https://travis-ci.org/networknt/light-proxy)
@@ -15,10 +15,10 @@ services like other API frameworks that support only [server side service discov
 Also, light services embed a distributed gateway to address all the cross-cutting concerns in the 
 request/response chain and work with the ecosystem that consists:
 
-* [light-oauth2](https://github.com/networknt/light-oauth2) for security
+* [light-oauth2](https://doc.networknt.com/service/oauth/) for security
 * [light-portal](https://github.com/networknt/light-portal) for API management and market place
 * [light-config-server](https://github.com/networknt/light-config-server) for centralized configuration management
-* [light-eventuate-4j](https://github.com/networknt/light-eventuate-4j) for eventual consistency based on event sourcing, CQRS and Kafka
+* [light-eventuate-4j](https://doc.networknt.com/style/light-eventuate-4j/) for eventual consistency based on event sourcing, CQRS and Kafka
 * [ELK](https://www.elastic.co/webinars/introduction-elk-stack) for centralized logging with traceabilityId and correlationId
 * [InfluxDB](https://github.com/influxdata/influxdb) and [Grafana](https://github.com/grafana/grafana) for metrics
 * [Consul](https://github.com/hashicorp/consul) or [Zookeeper](http://zookeeper.apache.org/) for service registry
@@ -48,9 +48,8 @@ The reverse proxy has the following features:
 
 To learn how to use this proxy, pleases refer to 
 
-* [Getting Started](https://networknt.github.io/light-proxy/getting-started/) to learn core concepts
-* [Tutorial](https://networknt.github.io/light-proxy/tutorial/) with step by step guide for RESTful proxy
-* [DevOps](https://networknt.github.io/light-proxy/devops/) for different configurations based on your situations
+* [Getting Started](https://doc.networknt.com/getting-started/light-proxy/) to learn core concepts
+* [Tutorial](https://doc.networknt.com/tutorial/proxy/) with step by step guide for RESTful proxy
+* [Configuration](https://doc.networknt.com/service/proxy/configuration/) for different configurations based on your situations
+* [Artifact](https://doc.networknt.com/service/proxy/artifact/) to guide customer to choose the right artifact to deploy light-proxy.
 
-
-  

@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
+- fixes #9 include openapi 3.0 dependencies
+- fixes #7 Dockerfile for production docker image
+- fixes #8 maven build warnings
 - Upgrade to light-4j 1.5.5
 - Upgrade to light-rest-4j 1.5.5
 
