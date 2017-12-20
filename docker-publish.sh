@@ -22,7 +22,7 @@ showHelp() {
     echo " "
     echo "    where [VERSION] version of the docker image that you want to publish (example: 0.0.1)"
     echo " "
-    echo "    example 1: ./scripts/docker-publish 0.0.1"
+    echo "    example 1: ./docker-publish 0.0.1"
     echo " "
 }
 
@@ -44,7 +44,7 @@ publish() {
     echo "Building Docker image with version $VERSION"
     docker build -t $IMAGE_NAME:$VERSION -t $IMAGE_NAME:latest -f ./docker/Dockerfile . --no-cache=true
     docker build -t $IMAGE_NAME:$VERSION-redhat -f ./docker/Dockerfile-Redhat . --no-cache=true
-    echo "Imaging built with version $VERSION"
+    echo "Images built with version $VERSION"
     echo "Pushing image to DockerHub"
     docker push $IMAGE_NAME
     echo "Image successfully published!"
