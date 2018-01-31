@@ -18,11 +18,11 @@ showHelp() {
     echo " "
     echo "Error: $1"
     echo " "
-    echo "    docker-publish [VERSION]"
+    echo "    build.sh [VERSION]"
     echo " "
     echo "    where [VERSION] version of the docker image that you want to publish (example: 0.0.1)"
     echo " "
-    echo "    example 1: ./docker-publish 0.0.1"
+    echo "    example 1: ./build.sh 0.0.1"
     echo " "
 }
 
