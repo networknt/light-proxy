@@ -1,5 +1,22 @@
 # Change Log
 
+## [1.5.8](https://github.com/networknt/light-proxy/tree/1.5.8) (2018-02-03)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.7...1.5.8)
+
+**Closed issues:**
+
+- update command line example in build.sh [\#12](https://github.com/networknt/light-proxy/issues/12)
+- Dockerfile for production docker image  [\#7](https://github.com/networknt/light-proxy/issues/7)
+
+**Merged pull requests:**
+
+- \#7: fix docker build [\#14](https://github.com/networknt/light-proxy/pull/14) ([DineshAlapati](https://github.com/DineshAlapati))
+- Fix/\#7 docker production image changes [\#13](https://github.com/networknt/light-proxy/pull/13) ([stevehu](https://github.com/stevehu))
+- fixes \#7 - update user permissions on artifacts in production dockerfile [\#11](https://github.com/networknt/light-proxy/pull/11) ([DineshAlapati](https://github.com/DineshAlapati))
+
+## [1.5.7](https://github.com/networknt/light-proxy/tree/1.5.7) (2018-01-01)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.6...1.5.7)
+
 ## [1.5.6](https://github.com/networknt/light-proxy/tree/1.5.6) (2017-12-31)
 [Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.1...1.5.6)
 
@@ -11,7 +28,6 @@
 
 - Add OpenAPI 3.0 handlers and OpenAPI Parser dependencies [\#9](https://github.com/networknt/light-proxy/issues/9)
 - maven build warnings [\#8](https://github.com/networknt/light-proxy/issues/8)
-- Dockerfile for production docker image  [\#7](https://github.com/networknt/light-proxy/issues/7)
 - Update config files to the latest format [\#6](https://github.com/networknt/light-proxy/issues/6)
 
 ## [1.5.1](https://github.com/networknt/light-proxy/tree/1.5.1) (2017-11-10)
