@@ -6,6 +6,4 @@ ADD target/light-proxy.jar server.jar
 # Port available to the world outside of this container
 EXPOSE 8080
 
-USER 1001
-
 CMD ["/bin/sh","-c","java -Dlight-4j-config-dir=/config -Dlogback.configurationFile=/config/logback.xml -jar server.jar"]
