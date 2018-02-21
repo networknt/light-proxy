@@ -1,5 +1,16 @@
 # Change Log
 
+## [1.5.9](https://github.com/networknt/light-proxy/tree/1.5.9) (2018-02-21)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.8...1.5.9)
+
+**Closed issues:**
+
+- only enable travis ci master branch build [\#16](https://github.com/networknt/light-proxy/issues/16)
+
+**Merged pull requests:**
+
+- Fix/\#7 docker production image changes [\#15](https://github.com/networknt/light-proxy/pull/15) ([DineshAlapati](https://github.com/DineshAlapati))
+
 ## [1.5.8](https://github.com/networknt/light-proxy/tree/1.5.8) (2018-02-03)
 [Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.7...1.5.8)
 
