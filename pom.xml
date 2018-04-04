@@ -61,7 +61,7 @@
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
         <version.undertow>1.4.20.Final</version.undertow>
-        <version.swagger>1.0.32</version.swagger>
+        <version.swagger-parser>1.0.34</version.swagger-parser>
         <version.json-schema-validator>0.1.15</version.json-schema-validator>
         <nexus.server>http://nexus.com:8080</nexus.server>
         <versions.maven-version>2.4</versions.maven-version>
@@ -163,7 +163,7 @@
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-parser</artifactId>
-            <version>${version.swagger}</version>
+            <version>${version.swagger-parser}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
