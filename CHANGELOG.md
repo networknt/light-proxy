@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.5.12](https://github.com/networknt/light-proxy/tree/1.5.12) (2018-04-07)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.11...1.5.12)
+
 ## [1.5.11](https://github.com/networknt/light-proxy/tree/1.5.11) (2018-04-01)
 [Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.10...1.5.11)
 
