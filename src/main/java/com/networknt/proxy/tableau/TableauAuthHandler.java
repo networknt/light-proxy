@@ -40,6 +40,11 @@ import java.util.concurrent.atomic.AtomicReference;
  * For light-proxy to work with the server, we need to handle the login and monitor the token expiration
  * in this tableau. https://onlinehelp.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_auth.htm
  *
+ * As for each login request, conentUrl is required, we have to ask the client to pass this in the header or
+ * query parameter. An admin user can access multiple sites on the server but for a particular request, only
+ * one site can be logged in. This requires that the handler logs in to all sites the client specified and
+ * cache the tokens for each site in memory to match the contentUrl to a token for subsequent requests. 
+ *
  * @author Steve Hu
  *
  */

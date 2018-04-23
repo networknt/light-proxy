@@ -14,5 +14,5 @@ earlyRefreshRetryDelay: 10000
 # Tableau Credentials for signin
 # Tableau user name
 tableauUsername: "admin"
-# request contentUrl
+# default request contentUrl if it is not passed from client
 tableauContentUrl: MarketingTeam
