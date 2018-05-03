@@ -4,15 +4,6 @@ enabled: false
 serverUrl: http://127.0.0.1:8080
 # The tableau signin API path
 serverPath: /api/2.8/auth/signin
-# The token will be renewed automatically 5 minutes before expiry
-tokenRenewBeforeExpired: 300000
-# if token is expired, we need short delay so that we can retry faster in the same thread of incoming request
-expiredRefreshRetryDelay: 1000
-# if token is not expired yet but in renew window, we can delay more time to retry.
-earlyRefreshRetryDelay: 10000
-
 # Tableau Credentials for signin
 # Tableau user name
 tableauUsername: "admin"
-# default request contentUrl if it is not passed from client
-tableauContentUrl: MarketingTeam

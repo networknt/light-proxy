@@ -35,3 +35,5 @@ singletons:
   # - com.networknt.validator.ValidatorHandler
   # Header handler to manipulate request and/or response headers before or after downstream server
   - com.networknt.header.HeaderHandler
+  # Tableau Simple Auth Handler for Tableau login and retrieve access token. This used when the backend is Tableau only.
+  - com.networknt.proxy.tableau.TableauSimpleAuthHandler
