@@ -1,5 +1,17 @@
 # Change Log
 
+## [1.5.14](https://github.com/networknt/light-proxy/tree/1.5.14) (2018-05-20)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.13...1.5.14)
+
+**Closed issues:**
+
+- update dockerfile to set container memory limit [\#21](https://github.com/networknt/light-proxy/issues/21)
+- switch tableau auth handler to simple one without cache [\#20](https://github.com/networknt/light-proxy/issues/20)
+- update comment to prepare for the multiple token support [\#19](https://github.com/networknt/light-proxy/issues/19)
+
+## [1.5.13](https://github.com/networknt/light-proxy/tree/1.5.13) (2018-04-20)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.12...1.5.13)
+
 ## [1.5.12](https://github.com/networknt/light-proxy/tree/1.5.12) (2018-04-07)
 [Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.11...1.5.12)
 
