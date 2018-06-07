@@ -26,12 +26,26 @@ public class ProxyHandlerProvider implements HandlerProvider {
             LoadBalancingProxyClient loadBalancer = new LoadBalancingProxyClient()
                     .setConnectionsPerThread(config.getConnectionsPerThread());
             hosts.forEach(handlingConsumerWrapper(host -> loadBalancer.addHost(new URI(host), Http2Client.SSL), URISyntaxException.class));
-            return new ProxyHandler(loadBalancer, config.getMaxRequestTime(), ResponseCodeHandler.HANDLE_404);
+            return ProxyHandler.builder()
+                    .setProxyClient(loadBalancer)
+                    .setMaxConnectionRetries(config.maxConnectionRetries)
+                    .setMaxRequestTime(config.maxRequestTime)
+                    .setReuseXForwarded(config.reuseXForwarded)
+                    .setRewriteHostHeader(config.rewriteHostHeader)
+                    .setNext(ResponseCodeHandler.HANDLE_404)
+                    .build();
         } else {
             LoadBalancingProxyClient loadBalancer = new LoadBalancingProxyClient()
                     .setConnectionsPerThread(config.getConnectionsPerThread());
             hosts.forEach(handlingConsumerWrapper(host -> loadBalancer.addHost(new URI(host)), URISyntaxException.class));
-            return new ProxyHandler(loadBalancer, config.getMaxRequestTime(), ResponseCodeHandler.HANDLE_404);
+            return ProxyHandler.builder()
+                    .setProxyClient(loadBalancer)
+                    .setMaxConnectionRetries(config.maxConnectionRetries)
+                    .setMaxRequestTime(config.maxRequestTime)
+                    .setReuseXForwarded(config.reuseXForwarded)
+                    .setRewriteHostHeader(config.rewriteHostHeader)
+                    .setNext(ResponseCodeHandler.HANDLE_404)
+                    .build();
         }
     }
 

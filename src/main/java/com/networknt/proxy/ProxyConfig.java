@@ -12,6 +12,9 @@ public class ProxyConfig {
     String hosts;
     int connectionsPerThread;
     int maxRequestTime;
+    boolean rewriteHostHeader;
+    boolean reuseXForwarded;
+    int maxConnectionRetries;
 
     public ProxyConfig() {
     }
@@ -63,4 +66,16 @@ public class ProxyConfig {
     public void setMaxRequestTime(int maxRequestTime) {
         this.maxRequestTime = maxRequestTime;
     }
+
+    public boolean isRewriteHostHeader() { return rewriteHostHeader; }
+
+    public void setRewriteHostHeader(boolean rewriteHostHeader) { this.rewriteHostHeader = rewriteHostHeader; }
+
+    public boolean isReuseXForwarded() { return reuseXForwarded; }
+
+    public void setReuseXForwarded(boolean reuseXForwarded) { this.reuseXForwarded = reuseXForwarded; }
+
+    public int getMaxConnectionRetries() { return maxConnectionRetries; }
+
+    public void setMaxConnectionRetries(int maxConnectionRetries) { this.maxConnectionRetries = maxConnectionRetries; }
 }
