@@ -81,16 +81,12 @@ public class TableauSimpleAuthHandler implements MiddlewareHandler {
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         String contentUrl = exchange.getRequestHeaders().getFirst(TABLEAU_CONTENT_URL);
         if(contentUrl == null || contentUrl.length() == 0) {
-            Status status = new Status(MISSING_TABLEAU_CONTENT_URL);
-            exchange.setStatusCode(status.getStatusCode());
-            exchange.getResponseSender().send(status.toString());
+            setExchangeStatus(exchange, MISSING_TABLEAU_CONTENT_URL);
             return;
         }
         String token = getToken(contentUrl);
         if(token == null) {
-            Status status = new Status(FAIL_TO_GET_TABLEAU_TOKEN);
-            exchange.setStatusCode(status.getStatusCode());
-            exchange.getResponseSender().send(status.toString());
+            setExchangeStatus(exchange, FAIL_TO_GET_TABLEAU_TOKEN);
             return;
         }
         exchange.getRequestHeaders().put(TABLEAU_TOKEN, token);

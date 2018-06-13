@@ -7,6 +7,8 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.ResponseCodeHandler;
 import io.undertow.server.handlers.proxy.LoadBalancingProxyClient;
 import io.undertow.server.handlers.proxy.ProxyHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -17,6 +19,7 @@ import java.util.function.Consumer;
 
 public class ProxyHandlerProvider implements HandlerProvider {
     static final String CONFIG_NAME = "proxy";
+    static final Logger logger = LoggerFactory.getLogger(ProxyHandlerProvider.class);
     static ProxyConfig config = (ProxyConfig)Config.getInstance().getJsonObjectConfig(CONFIG_NAME, ProxyConfig.class);
 
     @Override
@@ -62,8 +65,7 @@ public class ProxyHandlerProvider implements HandlerProvider {
             } catch (Exception ex) {
                 try {
                     E exCast = exceptionClass.cast(ex);
-                    System.err.println(
-                            "Exception occured : " + exCast.getMessage());
+                    logger.error("Exception occured :", ex);
                 } catch (ClassCastException ccEx) {
                     throw new RuntimeException(ex);
                 }
