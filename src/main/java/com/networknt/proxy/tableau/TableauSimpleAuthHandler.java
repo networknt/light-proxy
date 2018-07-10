@@ -6,6 +6,7 @@ import com.networknt.common.DecryptUtil;
 import com.networknt.config.Config;
 import com.networknt.exception.ApiException;
 import com.networknt.exception.ClientException;
+import com.networknt.handler.Handler;
 import com.networknt.handler.MiddlewareHandler;
 import com.networknt.status.Status;
 import com.networknt.utility.ModuleRegistry;
@@ -91,7 +92,7 @@ public class TableauSimpleAuthHandler implements MiddlewareHandler {
         }
         exchange.getRequestHeaders().put(TABLEAU_TOKEN, token);
         exchange.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
-        next.handleRequest(exchange);
+        Handler.next(exchange, next);
     }
 
     private String getToken(String contentUrl) throws ClientException {
