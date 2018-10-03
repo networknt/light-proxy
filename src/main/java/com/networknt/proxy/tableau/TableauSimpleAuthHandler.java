@@ -102,7 +102,7 @@ public class TableauSimpleAuthHandler implements MiddlewareHandler {
         final ClientConnection connection;
         try {
             // use HTTP 1.1 connection as I don't think Tableau supports HTTP 2.0
-            connection = client.connect(new URI(config.getServerUrl()), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.EMPTY).get();
+            connection = client.connect(new URI(config.getServerUrl()), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
         } catch (Exception e) {
             throw new ClientException(e);
         }
