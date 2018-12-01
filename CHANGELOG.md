@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.5.23](https://github.com/networknt/light-proxy/tree/1.5.23) (2018-12-01)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.22...1.5.23)
+
+**Closed issues:**
+
+- upgrade light-proxy to use handler.yml as it is more flexible [\#25](https://github.com/networknt/light-proxy/issues/25)
+
+## [1.5.22](https://github.com/networknt/light-proxy/tree/1.5.22) (2018-11-10)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.21...1.5.22)
+
 ## [1.5.21](https://github.com/networknt/light-proxy/tree/1.5.21) (2018-10-05)
 [Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.20...1.5.21)
 
