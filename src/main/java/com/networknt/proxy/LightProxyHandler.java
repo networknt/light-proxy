@@ -1,0 +1,66 @@
+package com.networknt.proxy;
+
+import com.networknt.client.Http2Client;
+import com.networknt.config.Config;
+import io.undertow.server.HttpHandler;
+import io.undertow.server.HttpServerExchange;
+import io.undertow.server.handlers.ResponseCodeHandler;
+import io.undertow.server.handlers.proxy.LoadBalancingProxyClient;
+import io.undertow.server.handlers.proxy.ProxyHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.networknt.proxy.ProxyHandlerProvider.handlingConsumerWrapper;
+
+/**
+ * This is a wrapper class for LightProxyHandler as it is implemented as final. This class implements
+ * the HttpHandler which can be injected into the handler.yml configuration file as another option
+ * for the handlers injection. The other option is to use RouterHandlerProvider in service.yml file.
+ *
+ * @author Steve Hu
+ */
+public class LightProxyHandler implements HttpHandler {
+    static final String CONFIG_NAME = "proxy";
+    static ProxyConfig config = (ProxyConfig) Config.getInstance().getJsonObjectConfig(CONFIG_NAME, ProxyConfig.class);
+
+    ProxyHandler proxyHandler;
+
+    public LightProxyHandler() {
+        List<String> hosts = Arrays.asList(config.getHosts().split(","));
+        if(config.httpsEnabled) {
+            LoadBalancingProxyClient loadBalancer = new LoadBalancingProxyClient()
+                    .setConnectionsPerThread(config.getConnectionsPerThread());
+            hosts.forEach(handlingConsumerWrapper(host -> loadBalancer.addHost(new URI(host), Http2Client.SSL), URISyntaxException.class));
+            proxyHandler = ProxyHandler.builder()
+                    .setProxyClient(loadBalancer)
+                    .setMaxConnectionRetries(config.maxConnectionRetries)
+                    .setMaxRequestTime(config.maxRequestTime)
+                    .setReuseXForwarded(config.reuseXForwarded)
+                    .setRewriteHostHeader(config.rewriteHostHeader)
+                    .setNext(ResponseCodeHandler.HANDLE_404)
+                    .build();
+        } else {
+            LoadBalancingProxyClient loadBalancer = new LoadBalancingProxyClient()
+                    .setConnectionsPerThread(config.getConnectionsPerThread());
+            hosts.forEach(handlingConsumerWrapper(host -> loadBalancer.addHost(new URI(host)), URISyntaxException.class));
+            proxyHandler = ProxyHandler.builder()
+                    .setProxyClient(loadBalancer)
+                    .setMaxConnectionRetries(config.maxConnectionRetries)
+                    .setMaxRequestTime(config.maxRequestTime)
+                    .setReuseXForwarded(config.reuseXForwarded)
+                    .setRewriteHostHeader(config.rewriteHostHeader)
+                    .setNext(ResponseCodeHandler.HANDLE_404)
+                    .build();
+        }
+    }
+
+    @Override
+    public void handleRequest(HttpServerExchange httpServerExchange) throws Exception {
+        proxyHandler.handleRequest(httpServerExchange);
+    }
+}
