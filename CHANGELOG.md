@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.5.30](https://github.com/networknt/light-proxy/tree/1.5.30) (2019-02-21)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.29...1.5.30)
+
+**Closed issues:**
+
+- Can use zk/etcd to dynamically change the proxy config [\#5](https://github.com/networknt/light-proxy/issues/5)
+
+## [1.5.29](https://github.com/networknt/light-proxy/tree/1.5.29) (2019-02-11)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.28...1.5.29)
+
 ## [1.5.28](https://github.com/networknt/light-proxy/tree/1.5.28) (2019-01-12)
 [Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.27...1.5.28)
 
@@ -68,17 +78,17 @@
 [Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.11...1.5.12)
 
 ## [1.5.11](https://github.com/networknt/light-proxy/tree/1.5.11) (2018-04-01)
-[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.9...1.5.11)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.10...1.5.11)
 
 **Closed issues:**
 
 - add TableauHandler for signing in Tableau server from proxy [\#17](https://github.com/networknt/light-proxy/issues/17)
 
-## [1.5.9](https://github.com/networknt/light-proxy/tree/1.5.9) (2018-02-21)
-[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.10...1.5.9)
-
 ## [1.5.10](https://github.com/networknt/light-proxy/tree/1.5.10) (2018-02-21)
-[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.8...1.5.10)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.9...1.5.10)
+
+## [1.5.9](https://github.com/networknt/light-proxy/tree/1.5.9) (2018-02-21)
+[Full Changelog](https://github.com/networknt/light-proxy/compare/1.5.8...1.5.9)
 
 **Closed issues:**
 
