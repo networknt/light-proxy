@@ -1,14 +1,18 @@
-A fast and light-weight reverse proxy with embedded gateway to wrap third party APIs and bring them to the ecosystem of light-*-4j frameworks
+A fast and light-weight reverse proxy with embedded gateway to wrap third party APIs and bring them to the ecosystem of light-4j frameworks
 
-[Developer Chat](https://gitter.im/networknt/light-proxy) |
+[Stack Overflow](https://stackoverflow.com/questions/tagged/light-4j) |
+[Google Group](https://groups.google.com/forum/#!forum/light-4j) |
+[Gitter Chat](https://gitter.im/networknt/light-proxy) |
+[Subreddit](https://www.reddit.com/r/lightapi/) |
+[Youtube Channel](https://www.youtube.com/channel/UCHCRMWJVXw8iB7zKxF55Byw) |
 [Documentation](https://doc.networknt.com/service/proxy/) |
-[Contribution Guide](CONTRIBUTING.md) |
+[Contribution Guide](https://doc.networknt.com/contribute/) |
 
 [![Build Status](https://travis-ci.org/networknt/light-proxy.svg?branch=master)](https://travis-ci.org/networknt/light-proxy)
 
 ## Why Reverse Proxy
 
-All the services developed on top of light-*-4j frameworks support [client side service discovery](http://microservices.io/patterns/client-side-discovery.html), 
+All the services developed on top of light-4j frameworks support [client side service discovery](http://microservices.io/patterns/client-side-discovery.html), 
 load balance and cluster natively. So there is no need to put a reverse proxy instance in front of our
 services like other API frameworks that support only [server side service discovery](http://microservices.io/patterns/server-side-discovery.html).
 
