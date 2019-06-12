@@ -32,7 +32,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
-
+/**
+ * Proxy Handler Provider
+ * @author Steve Hu
+ */
 public class ProxyHandlerProvider implements HandlerProvider {
     static final String CONFIG_NAME = "proxy";
     static final Logger logger = LoggerFactory.getLogger(ProxyHandlerProvider.class);
