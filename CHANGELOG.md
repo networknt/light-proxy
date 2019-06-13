@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.0.1](https://github.com/networknt/light-proxy/tree/2.0.1) (2019-06-13)
+
+
+**Merged pull requests:**
+
+
+- fixes \#29 add both release and snapshot repositories [\#30](https://github.com/networknt/light-proxy/pull/30) ([stevehu](https://github.com/stevehu))
+- fixes \#27 use only version.light-4j for light modules [\#28](https://github.com/networknt/light-proxy/pull/28) ([stevehu](https://github.com/stevehu))
 ## [1.6.4](https://github.com/networknt/light-proxy/tree/1.6.4) (2019-06-10)
 
 
