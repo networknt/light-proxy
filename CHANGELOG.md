@@ -7,6 +7,8 @@
 
 
 - fixes \#36 upgrade jackson-databind to 2.9.9.3 [\#37](https://github.com/networknt/light-proxy/pull/37) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.0.3](https://github.com/networknt/light-proxy/tree/2.0.3) (2019-07-31)
 
 
