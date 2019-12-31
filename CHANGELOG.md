@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.6.13](https://github.com/networknt/light-proxy/tree/1.6.13) (2019-12-30)
+## [1.6.13](https://github.com/networknt/light-proxy/tree/1.6.13) (2019-12-31)
 
 
 **Merged pull requests:**
