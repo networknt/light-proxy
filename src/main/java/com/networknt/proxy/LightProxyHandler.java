@@ -51,7 +51,7 @@ public class LightProxyHandler implements HttpHandler {
         if(config.httpsEnabled) {
             LoadBalancingProxyClient loadBalancer = new LoadBalancingProxyClient()
                     .setConnectionsPerThread(config.getConnectionsPerThread());
-            hosts.forEach(handlingConsumerWrapper(host -> loadBalancer.addHost(new URI(host), Http2Client.SSL), URISyntaxException.class));
+            hosts.forEach(handlingConsumerWrapper(host -> loadBalancer.addHost(new URI(host), Http2Client.getInstance().getDefaultXnioSsl()), URISyntaxException.class));
             proxyHandler = ProxyHandler.builder()
                     .setProxyClient(loadBalancer)
                     .setMaxConnectionRetries(config.maxConnectionRetries)
