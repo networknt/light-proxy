@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.0.10](https://github.com/networknt/light-proxy/tree/2.0.10) (2020-01-31)
+
+
+**Merged pull requests:**
+
+
+- fixes \#41 set the Ssl from defaultXnioSsl when creating host [\#42](https://github.com/networknt/light-proxy/pull/42) ([stevehu](https://github.com/stevehu))
+- fixes \#39 add jaeger dependency for open-tracing [\#40](https://github.com/networknt/light-proxy/pull/40) ([stevehu](https://github.com/stevehu))
 ## [2.0.9](https://github.com/networknt/light-proxy/tree/2.0.9) (2019-12-31)
 
 
