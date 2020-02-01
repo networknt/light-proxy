@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.6.14](https://github.com/networknt/light-proxy/tree/1.6.14) (2020-01-31)
+
+
+**Merged pull requests:**
+
+
+- fixes \#41 set the Ssl from defaultXnioSsl when creating host [\#42](https://github.com/networknt/light-proxy/pull/42) ([stevehu](https://github.com/stevehu))
 ## [1.6.13](https://github.com/networknt/light-proxy/tree/1.6.13) (2019-12-31)
 
 
