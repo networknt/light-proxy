@@ -1,6 +1,6 @@
 # Change Log
 
-## [2.0.10](https://github.com/networknt/light-proxy/tree/2.0.10) (2020-01-31)
+## [2.0.10](https://github.com/networknt/light-proxy/tree/2.0.10) (2020-02-01)
 
 
 **Merged pull requests:**
