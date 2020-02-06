@@ -6,7 +6,7 @@
     <groupId>com.networknt</groupId>
     <artifactId>light-proxy</artifactId>
     <packaging>jar</packaging>
-    <version>1.6.15_SNAPSHOT</version>
+    <version>1.6.15</version>
     <name>light-proxy</name>
     <description>Light Proxy</description>
     <url>https://github.com/networknt/light-proxy</url>
