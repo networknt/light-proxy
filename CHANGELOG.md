@@ -7,6 +7,8 @@
 
 
 - fixes \#43 update Dockerfile to resolve jlink not found [\#44](https://github.com/networknt/light-proxy/pull/44) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.0.10](https://github.com/networknt/light-proxy/tree/2.0.10) (2020-02-01)
 
 
