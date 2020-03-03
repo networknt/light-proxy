@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+    version: 1.0.0
+    title: reverse proxy demo backend service
+    description: reverse proxy backend with get, post endpoints
+    contact:
+        email: stevehu@gmail.com
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+    - url: http://proxy.networknt.com
+
+paths:
+    /:
+        get:
+            description: Return an array of strings
+            operationId: getData
+            responses:
+                default:
+                    description: Default response

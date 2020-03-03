@@ -59,7 +59,7 @@
         </triggeringPolicy>
     </appender>
 
-    <root level="error">
+    <root level="trace">
         <appender-ref ref="stdout"/>
     </root>
 
