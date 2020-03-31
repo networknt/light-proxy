@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.0.12](https://github.com/networknt/light-proxy/tree/2.0.12) (2020-03-31)
+
+
+**Merged pull requests:**
+
+
+- fixes \#45 update the test config to handler.yml and remove service.yml [\#46](https://github.com/networknt/light-proxy/pull/46) ([stevehu](https://github.com/stevehu))
 ## [2.0.11](https://github.com/networknt/light-proxy/tree/2.0.11) (2020-02-29)
 
 
