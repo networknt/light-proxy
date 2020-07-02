@@ -7,6 +7,8 @@
 
 
 - fixes \#47 remove the temporary version.jackson-databind in the pom.xml [\#48](https://github.com/networknt/light-proxy/pull/48) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.0.14](https://github.com/networknt/light-proxy/tree/2.0.14) (2020-05-29)
 
 
