@@ -7,6 +7,8 @@
 
 
 - fixes \#49 remove swagger 2.0 dependencies as it is deprecated [\#50](https://github.com/networknt/light-proxy/pull/50) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.0.15](https://github.com/networknt/light-proxy/tree/2.0.15) (2020-07-01)
 
 
