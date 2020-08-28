@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.6.27](https://github.com/networknt/light-proxy/tree/1.6.27) (2020-08-28)
+
+
+**Merged pull requests:**
+
+
+- fixes \#49 remove swagger 2.0 dependencies as it is deprecated [\#50](https://github.com/networknt/light-proxy/pull/50) ([stevehu](https://github.com/stevehu))
 ## [1.6.26](https://github.com/networknt/light-proxy/tree/1.6.26) (2020-08-01)
 
 
