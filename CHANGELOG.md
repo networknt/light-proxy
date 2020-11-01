@@ -7,6 +7,8 @@
 
 
 - Bump junit from 4.12 to 4.13.1 [\#51](https://github.com/networknt/light-proxy/pull/51) ([dependabot](https://github.com/apps/dependabot))
+
+
 ## [2.0.18](https://github.com/networknt/light-proxy/tree/2.0.18) (2020-10-01)
 
 
