@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.0.21](https://github.com/networknt/light-proxy/tree/2.0.21) (2020-11-25)
+
+
+**Merged pull requests:**
+
+
+- fixes \#54 update the logback.xml to enable debug for com.networknt only [\#55](https://github.com/networknt/light-proxy/pull/55) ([stevehu](https://github.com/stevehu))
+- fixes \#52 update server.yml to add keystore and truststore passwords [\#53](https://github.com/networknt/light-proxy/pull/53) ([stevehu](https://github.com/stevehu))
 ## [2.0.20](https://github.com/networknt/light-proxy/tree/2.0.20) (2020-11-05)
 
 
