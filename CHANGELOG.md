@@ -6,6 +6,8 @@
 **Merged pull requests:**
 
 
+
+
 ## [2.0.22](https://github.com/networknt/light-proxy/tree/2.0.22) (2020-12-23)
 
 
