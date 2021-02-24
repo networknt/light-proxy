@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.0.24](https://github.com/networknt/light-proxy/tree/2.0.24) (2021-02-24)
+
+
+**Merged pull requests:**
+
+
+- fixes \#60 upgrade to jackson 2.12.1 to resolve the security vulnerbility [\#61](https://github.com/networknt/light-proxy/pull/61) ([stevehu](https://github.com/stevehu))
+- Bump version.jackson from 2.10.4 to 2.12.1 [\#59](https://github.com/networknt/light-proxy/pull/59) ([dependabot](https://github.com/apps/dependabot))
 ## [2.0.23](https://github.com/networknt/light-proxy/tree/2.0.23) (2021-01-29)
 
 
