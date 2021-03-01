@@ -5,12 +5,10 @@ import com.networknt.config.Config;
 import com.networknt.handler.LightHttpHandler;
 import com.networknt.info.ServerInfoGetHandler;
 import com.networknt.utility.StringUtils;
-import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
 import io.undertow.client.ClientRequest;
 import io.undertow.client.ClientResponse;
 import io.undertow.server.HttpServerExchange;
-import io.undertow.util.HeaderValues;
 import io.undertow.util.Headers;
 import io.undertow.util.HttpString;
 import io.undertow.util.Methods;
@@ -27,23 +25,17 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ProxyServerInfoHandler implements LightHttpHandler {
     static final String CONFIG_NAME = "proxy";
-    static ProxyConfig config = (ProxyConfig) Config.getInstance().getJsonObjectConfig(CONFIG_NAME, ProxyConfig.class);
+    ProxyConfig config = (ProxyConfig) Config.getInstance().getJsonObjectConfig(CONFIG_NAME, ProxyConfig.class);
     private static Http2Client client = Http2Client.getInstance();
     private static final int UNUSUAL_STATUS_CODE = 300;
-    private static OptionMap optionMap = OptionMap.create(UndertowOptions.ENABLE_HTTP2, true);
     private static final String PROXY_INFO_KEY = "proxy_info";
-
-    public ProxyServerInfoHandler() {
-        config = (ProxyConfig) Config.getInstance().getJsonObjectConfig(CONFIG_NAME, ProxyConfig.class);
-    }
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         Map<String, Object> result = new HashMap<>();
         Map<String, Object> proxyInfo = ServerInfoGetHandler.getServerInfo(exchange);
         result.put(PROXY_INFO_KEY, proxyInfo);
-        HeaderValues authVal = exchange.getRequestHeaders().get(Headers.AUTHORIZATION_STRING);
-        String token = authVal == null ? "" : authVal.get(0);
+        String token = exchange.getRequestHeaders().get(Headers.AUTHORIZATION_STRING).get(0);
         List<String> urls = Arrays.asList(config.getHosts().split(","));
         for (String url : urls) {
             Map<String, Object> serverInfo;
@@ -59,38 +51,24 @@ public class ProxyServerInfoHandler implements LightHttpHandler {
         exchange.getResponseSender().send(Config.getInstance().getMapper().writeValueAsString(result));
 
     }
-
-    /**
-     * get server info from url with token
-     * @param url the url of the target server
-     * @param token auth token
-     * @return server info JSON string
-     */
     public static String getServerInfo(String url, String token) {
 
         String res = "{}";
         ClientConnection connection = null;
         try {
             URI uri = new URI(url);
-            if (config == null || config.isHttpsEnabled()) {
-                connection = client.borrowConnection(uri, Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
-            } else {
-                connection = client.borrowConnection(uri, Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, optionMap).get();
-            }
-
+            connection = client.borrowConnection(uri, Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
             AtomicReference<ClientResponse> reference = send(connection, Methods.GET, "/server/info", token, null);
             if(reference != null && reference.get() != null) {
                 int statusCode = reference.get().getResponseCode();
                 if (statusCode >= UNUSUAL_STATUS_CODE) {
                     logger.error("Server Info error: {} : {}", statusCode, reference.get().getAttachment(Http2Client.RESPONSE_BODY));
-                    throw new RuntimeException();
                 } else {
                     res = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
                 }
             }
         } catch (Exception e) {
             logger.error("Server info request exception", e);
-            throw new RuntimeException("exception when getting server info", e);
         } finally {
             client.returnConnection(connection);
         }
