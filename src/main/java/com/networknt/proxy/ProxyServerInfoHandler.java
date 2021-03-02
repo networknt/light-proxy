@@ -72,7 +72,7 @@ public class ProxyServerInfoHandler implements LightHttpHandler {
         ClientConnection connection = null;
         try {
             URI uri = new URI(url);
-            if (config == null || config.isHttpsEnabled()) {
+            if (config == null || !config.isHttpsEnabled()) {
                 connection = client.borrowConnection(uri, Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
             } else {
                 connection = client.borrowConnection(uri, Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, optionMap).get();
