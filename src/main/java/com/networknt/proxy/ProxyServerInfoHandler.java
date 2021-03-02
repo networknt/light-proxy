@@ -65,7 +65,6 @@ public class ProxyServerInfoHandler implements LightHttpHandler {
      * @param url the url of the target server
      * @param token auth token
      * @return server info JSON string
-     * @throws {@link RuntimeException} when there is no good response
      */
     public static String getServerInfo(String url, String token) {
 
