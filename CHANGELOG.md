@@ -1,5 +1,14 @@
 # Change Log
 
+## [2.0.25](https://github.com/networknt/light-proxy/tree/2.0.25) (2021-03-28)
+
+
+**Merged pull requests:**
+
+
+- Feat/\#62 server info [\#66](https://github.com/networknt/light-proxy/pull/66) ([BalloonWen](https://github.com/BalloonWen))
+- fixes \#64 resolve a javadoc issue for the ProxyServerInfoHandler [\#65](https://github.com/networknt/light-proxy/pull/65) ([stevehu](https://github.com/stevehu))
+- added ProxyServerInfoHandler to combine its server info and the backend's server info [\#63](https://github.com/networknt/light-proxy/pull/63) ([BalloonWen](https://github.com/BalloonWen))
 ## [2.0.24](https://github.com/networknt/light-proxy/tree/2.0.24) (2021-02-24)
 
 
