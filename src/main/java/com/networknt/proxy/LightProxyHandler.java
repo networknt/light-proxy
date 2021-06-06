@@ -22,7 +22,6 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.ResponseCodeHandler;
 import io.undertow.server.handlers.proxy.LoadBalancingProxyClient;
-import io.undertow.server.handlers.proxy.ProxyHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +30,7 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+
 
 /**
  * This is a wrapper class for LightProxyHandler as it is implemented as final. This class implements
@@ -41,8 +41,8 @@ import java.util.function.Consumer;
  */
 public class LightProxyHandler implements HttpHandler {
     static final String CONFIG_NAME = "proxy";
-    static ProxyConfig config = (ProxyConfig) Config.getInstance().getJsonObjectConfig(CONFIG_NAME, ProxyConfig.class);
     static final Logger logger = LoggerFactory.getLogger(LightProxyHandler.class);
+    static ProxyConfig config = (ProxyConfig) Config.getInstance().getJsonObjectConfig(CONFIG_NAME, ProxyConfig.class);
 
     ProxyHandler proxyHandler;
 
@@ -100,4 +100,5 @@ public class LightProxyHandler implements HttpHandler {
             }
         };
     }
+
 }

@@ -47,6 +47,7 @@ handlers:
   # Direct requests to named services based on the request path
   # - com.networknt.router.middleware.PathPrefixServiceHandler@path
   - com.networknt.proxy.LightProxyHandler@proxy
+  - com.networknt.proxy.ProxyServerInfoHandler@proxyServerInfo
   # - com.networknt.resource.VirtualHostHandler@virtual
   # Customer business domain specific cross-cutting concerns handlers
   # - com.example.validator.CustomizedValidator@custvalidator
@@ -87,4 +88,4 @@ paths:
   - path: '/server/info'
     method: 'get'
     exec:
-      - info
+      - proxyServerInfo

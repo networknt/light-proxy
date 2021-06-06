@@ -17,6 +17,7 @@
 package com.networknt.proxy;
 
 import com.networknt.client.Http2Client;
+import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
 import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
@@ -35,6 +36,7 @@ import org.xnio.OptionMap;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
@@ -171,6 +173,49 @@ public class ProxyHttpTest {
         }
         for (final AtomicReference<ClientResponse> reference : references) {
             Assert.assertTrue(reference.get().getAttachment(Http2Client.RESPONSE_BODY).contains("Server"));
+            System.out.println(reference.get().getAttachment(Http2Client.RESPONSE_BODY));
+        }
+    }
+
+    @Test
+    public void testGetServerInfo() throws Exception {
+        final Http2Client client = Http2Client.getInstance();
+        final CountDownLatch latch = new CountDownLatch(10);
+        final ClientConnection connection;
+        try {
+            connection = client.connect(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY).get();
+        } catch (Exception e) {
+            throw new ClientException(e);
+        }
+        final List<AtomicReference<ClientResponse>> references = new CopyOnWriteArrayList<>();
+        try {
+            connection.getIoThread().execute(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < 10; i++) {
+                        AtomicReference<ClientResponse> reference = new AtomicReference<>();
+                        references.add(i, reference);
+                        final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/server/info");
+                        connection.sendRequest(request, client.createClientCallback(reference, latch));
+                    }
+                }
+
+            });
+
+            latch.await();
+        } catch (Exception e) {
+            logger.error("Exception: ", e);
+            throw new ClientException(e);
+        } finally {
+            IoUtils.safeClose(connection);
+        }
+        for (final AtomicReference<ClientResponse> reference : references) {
+            String response = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            Map<String, Object> map = Config.getInstance().getMapper().readValue(response, Map.class);
+            Assert.assertTrue(map.containsKey("proxy_info"));
+            Assert.assertTrue(map.containsKey("http://localhost:8081"));
+            Assert.assertTrue(map.containsKey("http://localhost:8082"));
+            Assert.assertTrue(map.containsKey("http://localhost:8083"));
             System.out.println(reference.get().getAttachment(Http2Client.RESPONSE_BODY));
         }
     }
