@@ -22,7 +22,6 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.ResponseCodeHandler;
 import io.undertow.server.handlers.proxy.LoadBalancingProxyClient;
-import io.undertow.server.handlers.proxy.ProxyHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,8 +29,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
-import static com.networknt.proxy.ProxyHandlerProvider.handlingConsumerWrapper;
 
 /**
  * This is a wrapper class for LightProxyHandler as it is implemented as final. This class implements
@@ -42,6 +41,7 @@ import static com.networknt.proxy.ProxyHandlerProvider.handlingConsumerWrapper;
  */
 public class LightProxyHandler implements HttpHandler {
     static final String CONFIG_NAME = "proxy";
+    static final Logger logger = LoggerFactory.getLogger(LightProxyHandler.class);
     static ProxyConfig config = (ProxyConfig) Config.getInstance().getJsonObjectConfig(CONFIG_NAME, ProxyConfig.class);
 
     ProxyHandler proxyHandler;
@@ -79,4 +79,26 @@ public class LightProxyHandler implements HttpHandler {
     public void handleRequest(HttpServerExchange httpServerExchange) throws Exception {
         proxyHandler.handleRequest(httpServerExchange);
     }
+
+    @FunctionalInterface
+    public interface ThrowingConsumer<T, E extends Exception> {
+        void accept(T t) throws E;
+    }
+    static <T, E extends Exception> Consumer<T> handlingConsumerWrapper(
+            ThrowingConsumer<T, E> throwingConsumer, Class<E> exceptionClass) {
+
+        return i -> {
+            try {
+                throwingConsumer.accept(i);
+            } catch (Exception ex) {
+                try {
+                    E exCast = exceptionClass.cast(ex);
+                    logger.error("Exception occured :", ex);
+                } catch (ClassCastException ccEx) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        };
+    }
+
 }
