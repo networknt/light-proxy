@@ -7,6 +7,8 @@
 
 
 - issue-\#56 [\#57](https://github.com/networknt/light-proxy/pull/57) ([BalloonWen](https://github.com/BalloonWen))
+
+
 ## [2.0.27](https://github.com/networknt/light-proxy/tree/2.0.27) (2021-05-25)
 
 
