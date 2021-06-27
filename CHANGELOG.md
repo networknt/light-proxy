@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.0.28](https://github.com/networknt/light-proxy/tree/2.0.28) (2021-06-27)
+
+
+**Merged pull requests:**
+
+
+- issue-\#56 [\#57](https://github.com/networknt/light-proxy/pull/57) ([BalloonWen](https://github.com/BalloonWen))
 ## [2.0.27](https://github.com/networknt/light-proxy/tree/2.0.27) (2021-05-25)
 
 
