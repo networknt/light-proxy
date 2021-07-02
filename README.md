@@ -57,3 +57,66 @@ To learn how to use this proxy, pleases refer to
 * [Configuration](https://doc.networknt.com/service/proxy/configuration/) for different configurations based on your situations
 * [Artifact](https://doc.networknt.com/service/proxy/artifact/) to guide customer to choose the right artifact to deploy light-proxy.
 
+
+### Sample on local environment
+
+- Start a sample NodeJs API:
+
+```
+
+ cd ~/networknt
+ git clone git@github.com:networknt/light-proxy.git
+
+```
+
+Follow the [steps](nodeapp/start.md) to start Nodejs books like restful API. The NodeJs api will start on local 8080 port
+
+We can verify with curl command:
+
+```
+Get:
+
+curl --location --request GET 'http://localhost:8080/api/books/' \
+--header 'Content-Type: application/json' \
+--data-raw '{"name":"mybook"}'
+
+Post:
+
+curl --location --request POST 'http://localhost:8080/api/books/' \
+--header 'Content-Type: application/json' \
+--data-raw '{"title":"Newbook"}'
+
+Put:
+
+curl --location --request POST 'http://localhost:8080/api/books/' \
+--header 'Content-Type: application/json' \
+--data-raw '{"title":"Newbook"}'
+
+Delete:
+
+curl --location --request DELETE 'http://localhost:8080/api/books/4' \
+--header 'Content-Type: application/json' \
+```
+
+- Build and start Proxy server:
+
+```
+
+cd light-proxy
+mvn clean install
+java -jar -Dlight-4j-config-dir=config/local  target/light-proxy.jar
+
+```
+
+The light-proxy will start based on the config on /config/local
+
+```
+From Postman send GET request throught proxy to books-store Nodejs api
+
+https://localhost:9445/api/books/
+```
+
+
+
+
+
