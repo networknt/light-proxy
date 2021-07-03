@@ -69,9 +69,9 @@ To learn how to use this proxy, pleases refer to
 
 ```
 
-Follow the [steps](nodeapp/start.md) to start Nodejs books like restful API. The NodeJs api will start on local 8080 port
+Follow the [steps](nodeapp/start.md) to start Nodejs books store restful API. The Nodejs api will start on local port: 8080 
 
-We can verify with curl command:
+We can verify the Nodejs restful API directly with curl command:
 
 ```
 Get:
@@ -98,6 +98,8 @@ curl --location --request DELETE 'http://localhost:8080/api/books/4' \
 --header 'Content-Type: application/json' \
 ```
 
+Now let's use light-proxy to leverage the light platform cross-cutting concerns:
+
 - Build and start Proxy server:
 
 ```
@@ -110,13 +112,54 @@ java -jar -Dlight-4j-config-dir=config/local  target/light-proxy.jar
 
 The light-proxy will start based on the config on /config/local
 
+Since we are trying to verify the light-proxy concept on local environment only. The sample will only verify schema validation handler for cross-cutting concerns.
+
+The openapi specification for the book store API located at [here](config/local/openapi.yaml)
+
+Access bookstore nodejs API through light-proxy:  
+ 
+GET:
+ 
 ```
-From Postman send GET request throught proxy to books-store Nodejs api
 
 https://localhost:9445/api/books/
 ```
 
+POST:
+ 
+```
+https://localhost:9445/api/books/
 
+request body:
 
+{"title":"New Book"}
+
+```
+
+Create a book with schema validation error: book title is required field
+
+POST
+
+```
+https://localhost:9445/api/books/
+
+request body:
+
+{"author":"Steve Jobs"}
+
+```
+
+Response:
+
+```
+{
+    "statusCode": 400,
+    "code": "ERR11004",
+    "message": "VALIDATOR_SCHEMA",
+    "description": "Schema Validation Error - requestBody.title: is missing but it is required",
+    "severity": "ERROR"
+}
+
+```
 
 
