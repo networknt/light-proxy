@@ -1,0 +1,93 @@
+service.singletons:
+  - com.networknt.utility.Decryptor:
+      - com.networknt.decrypt.AESDecryptor
+  - com.networknt.balance.LoadBalance:
+      - com.networknt.balance.RoundRobinLoadBalance
+  - com.networknt.cluster.Cluster:
+      - com.networknt.cluster.LightCluster
+
+## server yaml
+server.httpsPort: 9445
+server.httpPort: 9080
+
+
+## proxy yaml
+proxy.hosts: http://localhost:8080
+
+## handler yaml
+handler.enabled: true
+
+handler.handlers:
+  # Light-framework cross-cutting concerns implemented in the microservice
+  - com.networknt.exception.ExceptionHandler@exception
+  # - com.networknt.metrics.MetricsHandler@metrics
+  - com.networknt.traceability.TraceabilityHandler@traceability
+  - com.networknt.correlation.CorrelationHandler@correlation
+  #Cors handler to handler post/put pre-flight
+  # - com.networknt.cors.CorsHttpHandler@cors
+  - com.networknt.openapi.OpenApiHandler@specification
+  - com.networknt.openapi.JwtVerifyHandler@security
+  - com.networknt.body.ProxyBodyHandler@body
+  # - com.networknt.audit.AuditHandler@audit
+  # - com.networknt.sanitizer.SanitizerHandler@sanitizer
+  - com.networknt.openapi.ValidatorHandler@validator
+  # Header middleware to manipulate request and/or response headers before or after downstream server
+  - com.networknt.header.HeaderHandler@header
+  # Direct requests to named services based on the request path
+  # - com.networknt.router.middleware.PathPrefixServiceHandler@path
+  - com.networknt.proxy.LightProxyHandler@proxy
+  - com.networknt.proxy.ProxyServerInfoHandler@proxyServerInfo
+  # - com.networknt.resource.VirtualHostHandler@virtual
+  # Customer business domain specific cross-cutting concerns handlers
+  # - com.example.validator.CustomizedValidator@custvalidator
+  # Framework endpoint handlers
+  - com.networknt.health.HealthGetHandler@health
+  - com.networknt.info.ServerInfoGetHandler@info
+  # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
+
+handler.chains:
+  default:
+    - exception
+    # - metrics
+    - traceability
+    - correlation
+    # - cors
+    - header
+    # - path
+    - specification
+    #- security
+    - body
+    #- audit
+    #- sanitizer
+    - validator
+    - proxy
+
+handler.paths:
+  - path: '/*'
+    method: 'GET'
+    exec:
+      - default
+  - path: '/*'
+    method: 'POST'
+    exec:
+      - default
+  - path: '/*'
+    method: 'PUT'
+    exec:
+      - default
+  - path: '/*'
+    method: 'DELETE'
+    exec:
+      - default
+
+  - path: '/health/com.networknt.backend-1.0.0'
+    method: 'get'
+    exec:
+      - health
+
+  # In most case, the /server/info endpoint shouldn't be exposed. If it is, then it must be protected by OAuth 2.0 or Basic Auth
+  - path: '/server/info'
+    method: 'get'
+    exec:
+      - proxyServerInfo
+

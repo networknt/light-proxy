@@ -1,0 +1,11 @@
+# Handler middleware chain configuration
+---
+enabled: ${handler.enabled:true}
+
+handlers: ${handler.handlers:}
+
+
+chains: ${handler.chains:}
+
+paths: ${handler.paths:}
+
