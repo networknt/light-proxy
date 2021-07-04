@@ -180,28 +180,22 @@ public class ProxyHttpTest {
     @Test
     public void testGetServerInfo() throws Exception {
         final Http2Client client = Http2Client.getInstance();
-        final CountDownLatch latch = new CountDownLatch(10);
+        final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
         try {
-            connection = client.connect(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY).get();
+            connection = client.connect(new URI(url), Http2Client.WORKER, client.getDefaultXnioSsl(), Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY).get();
         } catch (Exception e) {
             throw new ClientException(e);
         }
-        final List<AtomicReference<ClientResponse>> references = new CopyOnWriteArrayList<>();
+        AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
             connection.getIoThread().execute(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 0; i < 10; i++) {
-                        AtomicReference<ClientResponse> reference = new AtomicReference<>();
-                        references.add(i, reference);
-                        final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/server/info");
-                        connection.sendRequest(request, client.createClientCallback(reference, latch));
-                    }
+                    final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/server/info");
+                    connection.sendRequest(request, client.createClientCallback(reference, latch));
                 }
-
             });
-
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -209,14 +203,12 @@ public class ProxyHttpTest {
         } finally {
             IoUtils.safeClose(connection);
         }
-        for (final AtomicReference<ClientResponse> reference : references) {
-            String response = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
-            Map<String, Object> map = Config.getInstance().getMapper().readValue(response, Map.class);
-            Assert.assertTrue(map.containsKey("proxy_info"));
-            Assert.assertTrue(map.containsKey("http://localhost:8081"));
-            Assert.assertTrue(map.containsKey("http://localhost:8082"));
-            Assert.assertTrue(map.containsKey("http://localhost:8083"));
-            System.out.println(reference.get().getAttachment(Http2Client.RESPONSE_BODY));
-        }
+        String response = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+        Map<String, Object> map = Config.getInstance().getMapper().readValue(response, Map.class);
+        Assert.assertTrue(map.containsKey("proxy_info"));
+        Assert.assertTrue(map.containsKey("http://localhost:8081"));
+        Assert.assertTrue(map.containsKey("http://localhost:8082"));
+        Assert.assertTrue(map.containsKey("http://localhost:8083"));
+        System.out.println(reference.get().getAttachment(Http2Client.RESPONSE_BODY));
     }
 }
