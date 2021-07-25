@@ -1,5 +1,14 @@
 # Change Log
 
+## [2.0.29](https://github.com/networknt/light-proxy/tree/2.0.29) (2021-07-25)
+
+
+**Merged pull requests:**
+
+
+- fixes \#72 update server info test case to call only once [\#73](https://github.com/networknt/light-proxy/pull/73) ([stevehu](https://github.com/stevehu))
+- Issue70 [\#71](https://github.com/networknt/light-proxy/pull/71) ([chenyan71](https://github.com/chenyan71))
+- fixes \#68 update TestServer to replace Server.config with Server.getS… [\#69](https://github.com/networknt/light-proxy/pull/69) ([stevehu](https://github.com/stevehu))
 ## [2.0.28](https://github.com/networknt/light-proxy/tree/2.0.28) (2021-06-27)
 
 
