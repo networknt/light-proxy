@@ -61,7 +61,7 @@ public class ProxyHttpTest {
         if(server1 == null) {
             logger.info("starting server1");
             server1 = Undertow.builder()
-                    .addHttpListener(8081, "localhost")
+                    .addHttpListener(18081, "localhost")
                     .setHandler(new HttpHandler() {
                         @Override
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
@@ -77,7 +77,7 @@ public class ProxyHttpTest {
         if(server2 == null) {
             logger.info("starting server2");
             server2 = Undertow.builder()
-                    .addHttpListener(8082, "localhost")
+                    .addHttpListener(18082, "localhost")
                     .setHandler(new HttpHandler() {
                         @Override
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
@@ -93,7 +93,7 @@ public class ProxyHttpTest {
         if(server3 == null) {
             logger.info("starting server3");
             server3 = Undertow.builder()
-                    .addHttpListener(8083, "localhost")
+                    .addHttpListener(18083, "localhost")
                     .setHandler(new HttpHandler() {
                         @Override
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
@@ -206,9 +206,9 @@ public class ProxyHttpTest {
         String response = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Map<String, Object> map = Config.getInstance().getMapper().readValue(response, Map.class);
         Assert.assertTrue(map.containsKey("proxy_info"));
-        Assert.assertTrue(map.containsKey("http://localhost:8081"));
-        Assert.assertTrue(map.containsKey("http://localhost:8082"));
-        Assert.assertTrue(map.containsKey("http://localhost:8083"));
+        Assert.assertTrue(map.containsKey("http://localhost:18081"));
+        Assert.assertTrue(map.containsKey("http://localhost:18082"));
+        Assert.assertTrue(map.containsKey("http://localhost:18083"));
         System.out.println(reference.get().getAttachment(Http2Client.RESPONSE_BODY));
     }
 }
