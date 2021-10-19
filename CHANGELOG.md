@@ -1,5 +1,14 @@
 # Change Log
 
+## [2.0.32](https://github.com/networknt/light-proxy/tree/2.0.32) (2021-10-19)
+
+
+**Merged pull requests:**
+
+
+- fixes \#76 update test server ports to avoid conflicts [\#77](https://github.com/networknt/light-proxy/pull/77) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.0.31](https://github.com/networknt/light-proxy/tree/2.0.31) (2021-09-22)
 
 
