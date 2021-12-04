@@ -88,7 +88,7 @@
         <version.lambda-iam>1.12.68</version.lambda-iam>
         <version.logback>1.2.3</version.logback>
         <version.junit>4.13.1</version.junit>
-        <version.undertow>2.2.4.Final</version.undertow>
+        <version.undertow>2.2.14.Final</version.undertow>
         <version.swagger-parser>1.0.34</version.swagger-parser>
         <version.json-schema-validator>1.0.63</version.json-schema-validator>
         <versions.maven-version>2.4</versions.maven-version>
