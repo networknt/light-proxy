@@ -6,5 +6,6 @@ service.singletons:
   - com.networknt.cluster.Cluster:
       - com.networknt.cluster.LightCluster
 
-
-
+server.serviceId: com.networknt.petstore-1.0.0
+server.environment: dev-proxy
+handler.basePath: /v1

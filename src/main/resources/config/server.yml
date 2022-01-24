@@ -46,7 +46,7 @@ bootstrapStoreName: ${server.bootstrapStoreName:bootstrap.truststore}
 bootstrapStorePass: ${server.bootstrapStorePass:password}
 
 # Unique service identifier. Used in service registration and discovery etc.
-serviceId: ${server.serviceId:com.networknt.router-0.1.0}
+serviceId: ${server.serviceId:com.networknt.proxy-1.0.0}
 
 # Flag to enable self service registration. This should be turned on on official test and production. And
 # dyanmicPort should be enabled if any orchestration tool is used like Kubernetes.
@@ -94,7 +94,7 @@ shutdownGracefulPeriod: ${server.shutdownGracefulPeriod:2000}
 # serviceName: ${server.serviceName:petstore}
 
 # Buffer size of undertow server. Default to 16K
-# bufferSize: ${server.bufferSize:16384}
+bufferSize: ${server.bufferSize:16384}
 
 # Number of IO thread. Default to number of processor * 2
 # ioThreads: ${server.ioThreads:4}
@@ -117,4 +117,4 @@ shutdownGracefulPeriod: ${server.shutdownGracefulPeriod:2000}
 # allowUnescapedCharactersInUrl: ${server.allowUnescapedCharactersInUrl:false}
 
 # Set the max transfer file size for uploading files. Default to 1000000 which is 1 MB.
-# maxTransferFileSize: ${server.maxTransferFileSize:1000000}
+maxTransferFileSize: ${server.maxTransferFileSize:1000000}

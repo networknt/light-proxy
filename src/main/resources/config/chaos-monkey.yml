@@ -1,0 +1,4 @@
+# Light Chaos Monkey API handlers Configuration.
+
+# Enable the handlers if set to true to allow user to get or post configurations for the assault handlers.
+enabled: true

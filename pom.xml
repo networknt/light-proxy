@@ -81,16 +81,16 @@
         <version.light-4j>2.0.33-SNAPSHOT</version.light-4j>
         <version.jackson>2.12.1</version.jackson>
         <version.slf4j>1.7.32</version.slf4j>
+        <version.logback>1.2.7</version.logback>
         <version.jose4j>0.6.3</version.jose4j>
         <version.lambda-core>1.2.1</version.lambda-core>
         <version.lambda-events>3.10.0</version.lambda-events>
         <version.lambda-awssdk>2.17.40</version.lambda-awssdk>
         <version.lambda-iam>1.12.68</version.lambda-iam>
-        <version.logback>1.2.7</version.logback>
-        <version.junit>4.13.1</version.junit>
+        <version.junit>5.8.2</version.junit>
         <version.undertow>2.2.14.Final</version.undertow>
-        <version.swagger-parser>1.0.34</version.swagger-parser>
         <version.json-schema-validator>1.0.63</version.json-schema-validator>
+        <version.logstash>7.0.1</version.logstash>
         <versions.maven-version>2.4</versions.maven-version>
         <version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
         <version.maven-javadoc>3.1.0</version.maven-javadoc>
@@ -102,7 +102,7 @@
         <version.maven-surefire>2.22.2</version.maven-surefire>
         <version.maven-source>3.1.0</version.maven-source>
     </properties>
- 
+
     <dependencies>
         <dependency>
             <groupId>com.networknt</groupId>
@@ -112,11 +112,6 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>utility</artifactId>
-            <version>${version.light-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>ingress-proxy</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
         <dependency>
@@ -156,12 +151,37 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
+            <artifactId>rate-limit</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>ingress-proxy</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
             <artifactId>health</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
+            <artifactId>http-url</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>info</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
             <artifactId>resource</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>body</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
         <dependency>
@@ -181,7 +201,47 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>specification</artifactId>
+            <artifactId>latency-assault</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>memory-assault</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>exception-assault</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>killapp-assault</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>chaos-monkey</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>service</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>registry</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>balance</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>cluster</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
         <dependency>
@@ -214,6 +274,26 @@
             <artifactId>openapi-parser</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>json-overlay</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>dump</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>portal-registry</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>specification</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -234,6 +314,11 @@
             <groupId>io.undertow</groupId>
             <artifactId>undertow-core</artifactId>
             <version>${version.undertow}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${version.logstash}</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
@@ -258,8 +343,14 @@
 
         <!-- Test Dependencies -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
@@ -309,6 +400,19 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>module-info.class</exclude>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>META-INF/versions/**</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                             </transformers>
@@ -348,9 +452,15 @@
                 <version>${version.maven-surefire}</version>
                 <dependencies>
                     <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-junit47</artifactId>
-                        <version>${version.maven-surefire}</version>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>1.2.0</version>
+                        <scope>compile</scope>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-api</artifactId>
+                        <version>${version.junit}</version>
                     </dependency>
                 </dependencies>
             </plugin>
