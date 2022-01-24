@@ -28,7 +28,11 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import io.undertow.util.Methods;
-import org.junit.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xnio.IoUtils;
@@ -41,13 +45,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
+@ExtendWith(TestServer.class)
 public class ProxyHttpTest {
     static final Logger logger = LoggerFactory.getLogger(ProxyHttpTest.class);
 
     static Undertow server1 = null;
     static Undertow server2 = null;
     static Undertow server3 = null;
-    @ClassRule
     public static TestServer server = TestServer.getInstance();
 
     static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
@@ -56,7 +60,7 @@ public class ProxyHttpTest {
     static final int httpsPort = server.getServerConfig().getHttpsPort();
     static final String url = enableHttp2 || enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         if(server1 == null) {
             logger.info("starting server1");
@@ -107,7 +111,7 @@ public class ProxyHttpTest {
         }
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() throws Exception {
         if(server1 != null) {
             try {
@@ -172,7 +176,7 @@ public class ProxyHttpTest {
             IoUtils.safeClose(connection);
         }
         for (final AtomicReference<ClientResponse> reference : references) {
-            Assert.assertTrue(reference.get().getAttachment(Http2Client.RESPONSE_BODY).contains("Server"));
+            Assertions.assertTrue(reference.get().getAttachment(Http2Client.RESPONSE_BODY).contains("Server"));
             System.out.println(reference.get().getAttachment(Http2Client.RESPONSE_BODY));
         }
     }
@@ -205,10 +209,10 @@ public class ProxyHttpTest {
         }
         String response = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Map<String, Object> map = Config.getInstance().getMapper().readValue(response, Map.class);
-        Assert.assertTrue(map.containsKey("proxy_info"));
-        Assert.assertTrue(map.containsKey("http://localhost:18081"));
-        Assert.assertTrue(map.containsKey("http://localhost:18082"));
-        Assert.assertTrue(map.containsKey("http://localhost:18083"));
+        Assertions.assertTrue(map.containsKey("proxy_info"));
+        Assertions.assertTrue(map.containsKey("http://localhost:18081"));
+        Assertions.assertTrue(map.containsKey("http://localhost:18082"));
+        Assertions.assertTrue(map.containsKey("http://localhost:18083"));
         System.out.println(reference.get().getAttachment(Http2Client.RESPONSE_BODY));
     }
 }

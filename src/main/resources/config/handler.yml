@@ -2,6 +2,18 @@
 ---
 enabled: true
 
+# Configuration for the LightHttpHandler. The handler is the base class  for all middleware, server and health handlers
+# set the Status Object in the AUDIT_INFO, for auditing purposes
+# default, if not set:false
+auditOnError: ${handler.auditOnError:false}
+
+# set the StackTrace in the AUDIT_INFO, for auditing purposes
+# default, if not set:false
+auditStackTrace: ${handler.auditStackTrace:false}
+
+# Base Path of the API endpoints
+basePath: ${handler.basePath:/v1}
+
 #------------------------------------------------------------------------------
 # Support individual handler chains for each separate endpoint. It allows framework
 # handlers like health check, server info to bypass majority of the middleware handlers
@@ -31,61 +43,157 @@ enabled: true
 handlers:
   # Light-framework cross-cutting concerns implemented in the microservice
   - com.networknt.exception.ExceptionHandler@exception
-  # - com.networknt.metrics.MetricsHandler@metrics
+  - com.networknt.metrics.MetricsHandler@metrics
   - com.networknt.traceability.TraceabilityHandler@traceability
   - com.networknt.correlation.CorrelationHandler@correlation
-  #Cors handler to handler post/put pre-flight
+  # Cors handler to handler post/put pre-flight. It is not used in the sidecar but only in the router.
   # - com.networknt.cors.CorsHttpHandler@cors
   - com.networknt.openapi.OpenApiHandler@specification
   - com.networknt.openapi.JwtVerifyHandler@security
-  # - com.networknt.body.BodyHandler@body
-  # - com.networknt.audit.AuditHandler@audit
-  # - com.networknt.sanitizer.SanitizerHandler@sanitizer
+  - com.networknt.body.ProxyBodyHandler@proxybody
+  - com.networknt.body.BodyHandler@body
+  - com.networknt.audit.AuditHandler@audit
+  # DumpHandler is to dump detail request/response info to log, useful for troubleshooting but not suggested to use in production due to it may lower the performance
+  # - com.networknt.dump.DumpHandler@dump 
+  - com.networknt.sanitizer.SanitizerHandler@sanitizer
   - com.networknt.openapi.ValidatorHandler@validator
   # Header middleware to manipulate request and/or response headers before or after downstream server
   - com.networknt.header.HeaderHandler@header
+  # Rate limit middleware to prevent DDoS attacks externally or throttle requests internally
+  - com.networknt.limit.LimitHandler@limit
   # Direct requests to named services based on the request path
   # - com.networknt.router.middleware.PathPrefixServiceHandler@path
   - com.networknt.proxy.LightProxyHandler@proxy
-  - com.networknt.proxy.ProxyServerInfoHandler@proxyServerInfo
-  # - com.networknt.resource.VirtualHostHandler@virtual
   # Customer business domain specific cross-cutting concerns handlers
   # - com.example.validator.CustomizedValidator@custvalidator
   # Framework endpoint handlers
   - com.networknt.health.HealthGetHandler@health
-  - com.networknt.info.ServerInfoGetHandler@info
+  - com.networknt.proxy.ProxyHealthGetHandler@proxyHealth
+  - com.networknt.logging.handler.LoggerGetHandler@getLogger
+  - com.networknt.logging.handler.LoggerPostHandler@postLogger
+  - com.networknt.logging.handler.LoggerGetLogContentsHandler@getLogContents
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
+  # Chaos Monkey middleware handlers and API handler
+  - com.networknt.chaos.KillappAssaultHandler@killapp
+  - com.networknt.chaos.LatencyAssaultHandler@latency
+  - com.networknt.chaos.MemoryAssaultHandler@memory
+  - com.networknt.chaos.ExceptionAssaultHandler@exchaos
+  - com.networknt.chaos.ChaosMonkeyGetHandler@chaosget
+  - com.networknt.chaos.ChaosMonkeyPostHandler@chaospost
+  - com.networknt.proxy.ProxyServerInfoHandler@proxyServerInfo
+  - com.networknt.specification.SpecDisplayHandler@spec
+  - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
+  # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
+  # Business Handlers
 
 chains:
   default:
     - exception
-    # - metrics
+    - metrics
+    - limit
     - traceability
     - correlation
+    - killapp
+    - latency
+    - memory
+    - exchaos
+    - audit
     # - cors
     - header
     # - path
     - specification
     - security
-    #- body
-    #- audit
-    #- sanitizer
+    - proxybody
+    - sanitizer
+    # - dump
     - validator
     - proxy
+  admin:
+    - exception
+    - correlation
+    - specification
+    - security
+    - body
+    - validator
 
 paths:
-  - path: '/'
+  - path: '/*'
     method: 'GET'
     exec:
       - default
-
-  - path: '/health/com.networknt.backend-1.0.0'
-    method: 'get'
+  - path: '/*'
+    method: 'POST'
     exec:
-      - health
+      - default
+  - path: '/*'
+    method: 'PUT'
+    exec:
+      - default
+  - path: '/*'
+    method: 'DELETE'
+    exec:
+      - default
+  - path: '/*'
+    method: 'PATCH'
+    exec:
+      - default
 
-  # In most case, the /server/info endpoint shouldn't be exposed. If it is, then it must be protected by OAuth 2.0 or Basic Auth
+  # The proxy server info will combine the sidecar and backend server info together if it is implemented on the backend.
   - path: '/server/info'
     method: 'get'
     exec:
+      - admin
       - proxyServerInfo
+  # the health endpoint for the proxy itself without security, this for both Kubernetes liveness and readiness.
+  - path: '/health'
+    method: 'get'
+    exec:
+      - exception
+      - health
+  # the health check endpoint called from control plane with security and it will invoke backend optionally.
+  - path: '/health/${server.serviceId}'
+    method: 'GET'
+    exec:
+      - exception
+      - security
+      - proxyHealth
+
+  - path: '/logger'
+    method: 'get'
+    exec:
+      - admin
+      - getLogger
+
+  - path: '/logger'
+    method: 'post'
+    exec:
+      - admin
+      - postLogger
+
+  - path: '/logger/content'
+    method: 'GET'
+    exec:
+      - admin
+      - getLogContents
+
+  - path: '/chaosmonkey'
+    method: 'get'
+    exec:
+      # enable security once we have this endpoint in the spec with a proper scope.
+      - admin
+      - chaosget
+
+  - path: '/chaosmonkey/{assault}'
+    method: 'post'
+    exec:
+      # enable security once we have this endpoint in the spec with a proper scope.
+      - admin
+      - chaospost
+  - path: '/spec.yaml'
+    method: 'get'
+    exec:
+      - spec
+  - path: '/specui.html'
+    method: 'get'
+    exec:
+      - swaggerui
