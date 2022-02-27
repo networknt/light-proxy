@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.1.0](https://github.com/networknt/light-proxy/tree/2.1.0) (2022-02-27)
+
+
+**Merged pull requests:**
+
+
+- fixes \#80 upgrade junit to 5 and update the config files [\#81](https://github.com/networknt/light-proxy/pull/81) ([stevehu](https://github.com/stevehu))
+- fixes \#78 add primary and secondary crt file to JWT verification [\#79](https://github.com/networknt/light-proxy/pull/79) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.0.32](https://github.com/networknt/light-proxy/tree/2.0.32) (2021-10-19)
 
 
