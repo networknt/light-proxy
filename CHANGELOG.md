@@ -8,6 +8,8 @@
 
 - fixes \#84 move the tableau authentication handler to the light-4j ing… [\#85](https://github.com/networknt/light-proxy/pull/85) ([stevehu](https://github.com/stevehu))
 - fixes \#82 update the light-gateway to add more properties to the limi… [\#83](https://github.com/networknt/light-proxy/pull/83) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.1.0](https://github.com/networknt/light-proxy/tree/2.1.0) (2022-02-28)
 
 
