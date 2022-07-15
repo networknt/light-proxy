@@ -88,7 +88,7 @@
         <version.lambda-awssdk>2.17.40</version.lambda-awssdk>
         <version.lambda-iam>1.12.68</version.lambda-iam>
         <version.junit>5.8.2</version.junit>
-        <version.undertow>2.2.14.Final</version.undertow>
+        <version.undertow>2.2.15.Final</version.undertow>
         <version.json-schema-validator>1.0.65</version.json-schema-validator>
         <version.logstash>7.0.1</version.logstash>
         <versions.maven-version>2.4</versions.maven-version>
