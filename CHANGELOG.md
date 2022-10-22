@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.1.2](https://github.com/networknt/light-proxy/tree/2.1.2) (2022-10-22)
+
+
+**Merged pull requests:**
+
+
+- fixes \#87 remove openapi-inject.yml to use the default one from opena… [\#88](https://github.com/networknt/light-proxy/pull/88) ([stevehu](https://github.com/stevehu))
 ## [2.1.1](https://github.com/networknt/light-proxy/tree/2.1.1) (2022-04-26)
 
 
