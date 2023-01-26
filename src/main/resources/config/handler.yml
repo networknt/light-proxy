@@ -137,6 +137,10 @@ paths:
     method: 'PATCH'
     exec:
       - default
+  - path: '/*'
+    method: 'OPTIONS'
+    exec:
+      - default
 
   # The proxy server info will combine the sidecar and backend server info together if it is implemented on the backend.
   - path: '/server/info'
