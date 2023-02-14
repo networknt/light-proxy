@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.1.7](https://github.com/networknt/light-proxy/tree/2.1.7) (2023-02-14)
+
+
+**Merged pull requests:**
+
+
+- fixes \#94 upgrade aws lambda dependencies [\#95](https://github.com/networknt/light-proxy/pull/95) ([stevehu](https://github.com/stevehu))
 ## [2.1.6](https://github.com/networknt/light-proxy/tree/2.1.6) (2023-02-06)
 
 
