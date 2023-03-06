@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.1.8](https://github.com/networknt/light-proxy/tree/2.1.8) (2023-03-06)
+
+
+**Merged pull requests:**
+
+
+- fixes \#96 remove proxy.yml from main and test [\#97](https://github.com/networknt/light-proxy/pull/97) ([stevehu](https://github.com/stevehu))
 ## [2.1.7](https://github.com/networknt/light-proxy/tree/2.1.7) (2023-02-14)
 
 
