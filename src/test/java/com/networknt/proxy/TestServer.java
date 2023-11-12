@@ -43,7 +43,7 @@ public class TestServer implements BeforeAllCallback, AfterAllCallback {
     }
 
     public ServerConfig getServerConfig() {
-        return Server.getServerConfig();
+        return ServerConfig.getInstance();
     }
 
     @Override
