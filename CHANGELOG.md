@@ -7,6 +7,8 @@
 
 
 - fixes \#101 refactor based on the ServerConfig change [\#102](https://github.com/networknt/light-proxy/pull/102) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.1.28](https://github.com/networknt/light-proxy/tree/2.1.28) (2023-10-24)
 
 
