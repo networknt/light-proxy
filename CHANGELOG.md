@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.1.29](https://github.com/networknt/light-proxy/tree/2.1.29) (2023-11-19)
+
+
+**Merged pull requests:**
+
+
+- fixes \#101 refactor based on the ServerConfig change [\#102](https://github.com/networknt/light-proxy/pull/102) ([stevehu](https://github.com/stevehu))
 ## [2.1.28](https://github.com/networknt/light-proxy/tree/2.1.28) (2023-10-24)
 
 
