@@ -59,4 +59,3 @@ Method: GET
 request body:
 {"name":"mybook"}
 ```
-

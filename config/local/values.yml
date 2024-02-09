@@ -89,4 +89,3 @@ handler.paths:
     method: 'get'
     exec:
       - proxyServerInfo
-
