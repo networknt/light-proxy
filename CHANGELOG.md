@@ -8,6 +8,8 @@
 
 - [pre-commit.ci] pre-commit autoupdate [\#106](https://github.com/networknt/light-proxy/pull/106) ([pre-commit-ci](https://github.com/apps/pre-commit-ci))
 - fixes \#104 add pre-commit hook and apply it [\#105](https://github.com/networknt/light-proxy/pull/105) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.1.31](https://github.com/networknt/light-proxy/tree/2.1.31) (2024-01-16)
 
 
