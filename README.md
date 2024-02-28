@@ -1,3 +1,5 @@
+Deprecated: It is replaced by the light-gateway with light-router and light-proxy features.
+
 A fast and light-weight reverse proxy with embedded gateway to wrap third party APIs and bring them to the ecosystem of light-4j frameworks
 
 [Stack Overflow](https://stackoverflow.com/questions/tagged/light-4j) |
