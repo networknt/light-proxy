@@ -186,11 +186,6 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>jaeger-tracing</artifactId>
-            <version>${version.light-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
             <artifactId>lambda-invoker</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
