@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.1.34](https://github.com/networknt/light-proxy/tree/2.1.34) (2024-06-22)
+
+
+**Merged pull requests:**
+
+
+- fixes \#111 upgrade aws lambda dependencies [\#112](https://github.com/networknt/light-proxy/pull/112) ([stevehu](https://github.com/stevehu))
+- [pre-commit.ci] pre-commit autoupdate [\#110](https://github.com/networknt/light-proxy/pull/110) ([pre-commit-ci](https://github.com/apps/pre-commit-ci))
 ## [2.1.33](https://github.com/networknt/light-proxy/tree/2.1.33) (2024-03-31)
 
 
