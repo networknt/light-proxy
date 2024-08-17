@@ -7,6 +7,8 @@
 
 
 - fixes \#113 remove externalized config files from src resource config [\#114](https://github.com/networknt/light-proxy/pull/114) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.1.34](https://github.com/networknt/light-proxy/tree/2.1.34) (2024-06-22)
 
 
