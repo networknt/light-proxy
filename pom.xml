@@ -85,7 +85,7 @@
         <version.jose4j>0.9.6</version.jose4j>
         <version.lambda-core>1.2.3</version.lambda-core>
         <version.lambda-events>3.14.0</version.lambda-events>
-        <version.lambda-awssdk>2.26.4</version.lambda-awssdk>
+        <version.lambda-awssdk>2.29.23</version.lambda-awssdk>
         <version.lambda-iam>1.12.745</version.lambda-iam>
         <version.junit>5.11.3</version.junit>
         <version.undertow>2.3.18.Final</version.undertow>
